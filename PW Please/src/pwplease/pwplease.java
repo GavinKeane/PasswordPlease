@@ -15,7 +15,7 @@ public class pwplease {
 
 			} else if (command.equals("SOMETHING ELSE HERE")) {
 				// ect ect
-			} else {
+			} else if (!command.equals("QUIT")) {
 				System.out.println("INVALID COMMAND");
 			}
 		}
