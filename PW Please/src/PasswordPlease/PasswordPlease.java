@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class PasswordPlease {
 
 	public static void main(String[] args) {
+		
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);
 		String command = in.nextLine();
