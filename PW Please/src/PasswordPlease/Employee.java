@@ -4,9 +4,15 @@
 	2/24 Caleb Fischer - intital creation
 	2/24 Caleb Fischer - started constructors and toString
 	2/25 Caleb Fischer - made Employee private, added getters and setters
+										 - added employee list
 	
 */
+import java.util.ArrayList;
 public class Employee {
+	
+	//list of employees
+	//access outside class using Employee.employees
+	public static ArrayList<Employee> employees = new ArrayList<Employee>();
 	
 	//Employee variables
 	private String lastname;
@@ -36,6 +42,9 @@ public class Employee {
 		this.phone = phone;
 		this.securityQuestion = securityQuestion;
 		this.securityAnswer = securityAnswer;
+		
+		//add employee to employee list
+		employees.add(this);
 	}
 	
 	/*
@@ -54,6 +63,9 @@ public class Employee {
 		this.phone = "default";
 		this.securityQuestion = "default";
 		this.securityAnswer = "default";
+		
+		//add employee to employee list
+		employees.add(this);
 	}
 	
 	/*
@@ -69,7 +81,7 @@ public class Employee {
 		No-args toString
 	*/
 	public String toString(){
-		return this.username + " | " + this.role + " | " + this.password;
+		return this.username;
 	}
 	
 	/*
@@ -127,7 +139,7 @@ public class Employee {
 	}
 	
 	public void setUsername(String updatedVal){
-		this.setUsername = updatedVal;
+		this.username = updatedVal;
 	}
 	
 	public void setRole(String updatedVal){

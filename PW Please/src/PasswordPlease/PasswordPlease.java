@@ -4,11 +4,6 @@ import java.util.Scanner;
 public class PasswordPlease {
 
 	public static void main(String[] args) {
-		Employee testEmployee = new Employee();
-		Employee testEmployee2 = new Employee();
-		testEmployee.setPassword("pass123");
-		testEmployee2.setPassword("pass456");
-		System.out.println(testEmployee.getPassword() + " " + testEmployee2.getPassword());
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);
 		String command = in.nextLine();
