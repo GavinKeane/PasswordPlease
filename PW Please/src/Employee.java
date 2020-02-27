@@ -1,3 +1,4 @@
+
 /*
 	Class used to represent employees in the company
 	
@@ -9,6 +10,8 @@
 */
 import java.util.ArrayList;
 public class Employee {
+	
+	private static Face faceCollection = new Face();
 	
 	//list of employees
 	//access outside class using Employee.employees
