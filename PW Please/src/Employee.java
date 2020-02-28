@@ -6,9 +6,12 @@
 	2/24 Caleb Fischer - started constructors and toString
 	2/25 Caleb Fischer - made Employee private, added getters and setters
 										 - added employee list
+  2/28 Caleb Fischer - name and username generation
 	
 */
 import java.util.ArrayList;
+import java.util.Random;
+
 public class Employee {
 	
 	private static Face faceCollection = new Face();
@@ -16,6 +19,11 @@ public class Employee {
 	//list of employees
 	//access outside class using Employee.employees
 	public static ArrayList<Employee> employees = new ArrayList<Employee>();
+	
+	//arrays of common firstnames and lastnames for name genration
+	public static String[] firstnames = {"James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Donald", "Mark", "Paul", "Steven", "Andrew", "Kenneth", "Joshua", "George", "Kevin", "Brian", "Edward", "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Nancy", "Margaret", "Lisa", "Betty", "Dorothy", "Sandra", "Ashley", "Kimberly", "Donna", "Emily", "Michelle", "Carol", "Amanda", "Melissa", "Deborah"};
+	
+	public static String[] lastnames = {"Smith", "Johnson", "Wiliams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker"};
 	
 	//Employee variables
 	private String lastname;
@@ -37,7 +45,6 @@ public class Employee {
 	public Employee(String lastname, String firstname, String role, String password, String face, String phone, String securityQuestion, String securityAnswer){
 		this.lastname = lastname;
 		this.firstname = firstname;
-		this.username = lastname;
 		this.role = role;
 		this.password = password;
 		this.encryptedPassword = password; //TODO update this line once encryption is implemented
@@ -45,6 +52,15 @@ public class Employee {
 		this.phone = phone;
 		this.securityQuestion = securityQuestion;
 		this.securityAnswer = securityAnswer;
+		
+		//set username to lastname.# based on how many employees have their last name
+		int lastnameCount = 1;
+		for (Employee e: employees){
+			if(e.lastname.equals(this.lastname)){
+				lastnameCount++;
+			}
+		}
+		this.username = lastname + "." + lastnameCount;
 		
 		//add employee to employee list
 		employees.add(this);
@@ -56,9 +72,11 @@ public class Employee {
 	*/
 	public Employee(){
 		//TODO random user generation
-		this.lastname = "default";
-		this.firstname = "default";
-		this.username = "default";
+		
+		//randomly pick first and last name
+		this.lastname = lastnames[new Random().nextInt(lastnames.length)];
+		this.firstname = firstnames[new Random().nextInt(firstnames.length)];
+		
 		this.role = "default";
 		this.password = "default";
 		this.encryptedPassword = "default"; //TODO update this line once encryption is implemented
@@ -66,6 +84,15 @@ public class Employee {
 		this.phone = "default";
 		this.securityQuestion = "default";
 		this.securityAnswer = "default";
+		
+		//set username to lastname.# based on how many existing employees have their last name
+		int lastnameCount = 1;
+		for (Employee e: employees){
+			if(e.lastname.equals(this.lastname)){
+				lastnameCount++;
+			}
+		}
+		this.username = lastname + "." + lastnameCount;
 		
 		//add employee to employee list
 		employees.add(this);
@@ -84,7 +111,7 @@ public class Employee {
 		No-args toString
 	*/
 	public String toString(){
-		return this.username;
+		return "\n" + this.firstname + " " + this.username + " | " + this.password;
 	}
 	
 	/*
