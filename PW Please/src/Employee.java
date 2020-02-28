@@ -24,7 +24,13 @@ public class Employee {
 	private String role;
 	private String password;
 	private String encryptedPassword;
-	private String face;
+	
+	//faceSet[0] is the correct Face associated with this employee
+	//faceSet[1] is the face with incorrect eyes
+	//faceSet[2] is the incorrect face entirely
+	private String[] faceSet;
+	
+	
 	private String phone;
 	private String securityQuestion;
 	private String securityAnswer;
@@ -41,7 +47,7 @@ public class Employee {
 		this.role = role;
 		this.password = password;
 		this.encryptedPassword = password; //TODO update this line once encryption is implemented
-		this.face = face;
+		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
 		this.phone = phone;
 		this.securityQuestion = securityQuestion;
 		this.securityAnswer = securityAnswer;
@@ -62,7 +68,7 @@ public class Employee {
 		this.role = "default";
 		this.password = "default";
 		this.encryptedPassword = "default"; //TODO update this line once encryption is implemented
-		this.face = "default";
+		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
 		this.phone = "default";
 		this.securityQuestion = "default";
 		this.securityAnswer = "default";
@@ -114,8 +120,11 @@ public class Employee {
 		return this.encryptedPassword;
 	}
 	
-	public String getFace(){
-		return this.face;
+	public String getFace(int option){
+		//faceSet[0] is the correct Face associated with this employee
+		//faceSet[1] is the face with incorrect eyes
+		//faceSet[2] is the incorrect face entirely
+		return this.faceSet[option];
 	}
 	
 	public String getPhone(){
@@ -157,8 +166,8 @@ public class Employee {
 		this.encryptedPassword = updatedVal;
 	}
 	
-	public void setFace(String updatedVal){
-		this.face = updatedVal;
+	public void setFace(String[] updatedVal){
+		this.faceSet = updatedVal;
 	}
 	
 	public void setPhone(String updatedVal){
