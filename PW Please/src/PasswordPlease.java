@@ -8,8 +8,9 @@ public class PasswordPlease {
 
 	public static void main(String[] args) {
 		//generate random employee list
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 19; i++){
 			Employee e = new Employee();
+			System.out.println(e.getFace(0) + "  " + e.getFace(1) + "  " + e.getFace(2));
 		}
 		
 		//test manual employee creation
