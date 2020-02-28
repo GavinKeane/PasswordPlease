@@ -1,8 +1,7 @@
 
 //package pwplease;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class PasswordPlease {
 
@@ -11,14 +10,18 @@ public class PasswordPlease {
 		List<Employee> employees = new ArrayList<>();
 		for (int i = 0; i < 19; i++) {
 			Employee e = new Employee();
-			employees.add(e);
-			// System.out.println(e.getFace(0) + " " + e.getFace(1) + " " + e.getFace(2));
 		}
-
-		// test manual employee creation
-		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872",
-				"What is the name of your first pet?", "Bandit");
-
+		
+		//test manual employee creation
+		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");
+		
+		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
+		
+		for(int i = 0; i < 10; i++){
+			Request r = new Request(1);
+			System.out.println(r);
+		}
+		
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);
 		String command = in.nextLine();

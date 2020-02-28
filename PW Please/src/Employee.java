@@ -84,7 +84,7 @@ public class Employee {
 		this.firstname = firstnames[new Random().nextInt(firstnames.length)];
 		
 		this.role = "default";
-		this.password = "default";
+		this.password = generatePassword();
 		this.encryptedPassword = "default"; //TODO update this line once encryption is implemented
 		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
 		this.phone = "default";
@@ -118,6 +118,14 @@ public class Employee {
 	*/
 	public String toString(){
 		return "\n" + this.firstname + " " + this.username + " | " + this.password;
+	}
+	
+	/*
+		Generate a password consisting of word + random numbers + special character
+	*/
+	private String generatePassword(){
+		//TODO implement
+		return "password";
 	}
 	
 	/*
