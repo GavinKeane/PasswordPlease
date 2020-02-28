@@ -2,18 +2,25 @@
 //package pwplease;
 import java.util.*;
 
+
 public class PasswordPlease {
 
 	public static void main(String[] args) {
 		//generate random employee list
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 19; i++){
 			Employee e = new Employee();
+			//System.out.println(e.getFace(0) + "  " + e.getFace(1) + "  " + e.getFace(2));
 		}
 		
 		//test manual employee creation
 		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
+		
+		for(int i = 0; i < 10; i++){
+			Request r = new Request(1);
+			System.out.println(r);
+		}
 		
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);

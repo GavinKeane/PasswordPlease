@@ -4,6 +4,7 @@
 	2/25 Caleb Fischer - Created class
 	
 */
+import java.util.*;
 public class Request {
 	
 	//Request variables
@@ -36,17 +37,35 @@ public class Request {
 		No-args constructor
 		Generates random request with information based on what day it is
 	*/
-	public Request(int day){
-		//TODO random request generation
-		this.username = "default";
-		this.password = "default";
+	public Request(int day){	
+		//randomly decide whether request will be valid or not, 50/50 chance
+		boolean valid = new Random().nextBoolean();
+		
+		//pick random Employee
+		Employee e = Employee.employees.get(new Random().nextInt(Employee.employees.size()));
+		this.username = e.getUsername();
+		
+		switch(day){
+			case 1:
+				if (valid){
+					this.password = e.getPassword();
+				}else{
+					this.password = "wrong"; //TODO generate wrong password
+				}
+			break;			
+		}
+		
 		this.encryptedPassword = "default";
 		this.system = "default";
 		this.face = "default";
 		this.token = "default";
 		this.securityAnswer = "default";
-		this.valid = true;
+		this.valid = valid;
 		this.failureText = "default";
+	}
+	
+	public String toString(){
+		return this.username + " | " + this.password + " | " + this.valid;
 	}
 	
 	/*
