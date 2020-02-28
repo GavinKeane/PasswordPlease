@@ -1,6 +1,6 @@
 
 //package pwplease;
-import java.util.Scanner;
+import java.util.*;
 
 public class PasswordPlease {
 
@@ -12,6 +12,8 @@ public class PasswordPlease {
 		
 		//test manual employee creation
 		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");
+		
+		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
 		
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);
