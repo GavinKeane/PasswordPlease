@@ -7,13 +7,14 @@ import java.util.Scanner;
 public class PasswordPlease {
 
 	public static void main(String[] args) {
-		List<Employee> e1 = new ArrayList<Employee>();
-		for (int i = 0; i < 20; i++) {
-			e1.add(new Employee());
+		//generate random employee list
+		for(int i = 0; i < 100; i++){
+			Employee e = new Employee();
 		}
-		for (int i = 0; i < e1.size(); i++) {
-			System.out.println(e1.get(i).getFace(0));
-		}
+		
+		//test manual employee creation
+		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");
+		
 		System.out.println("Welcome to Password, Please");
 		Scanner in = new Scanner(System.in);
 		String command = in.nextLine();
@@ -22,6 +23,9 @@ public class PasswordPlease {
 			switch(command){
 				case "HELP":
 					printCommands();
+					break;
+				case "LIST":
+					System.out.println(Employee.employees);
 					break;
 				case "QUIT":
 					return;
