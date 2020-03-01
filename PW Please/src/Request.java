@@ -39,18 +39,24 @@ public class Request {
 	*/
 	public Request(int day){	
 		//randomly decide whether request will be valid or not, 50/50 chance
-		boolean valid = new Random().nextBoolean();
+		int rand = new Random().nextInt(20);
+		boolean valid = true;
+		if (rand < 10){
+			valid = false;
+		}
 		
 		//pick random Employee
 		Employee e = Employee.employees.get(new Random().nextInt(Employee.employees.size()));
 		this.username = e.getUsername();
+		this.failureText = "The request was valid.";
 		
 		switch(day){
 			case 1:
 				if (valid){
 					this.password = e.getPassword();
 				}else{
-					this.password = "wrong"; //TODO generate wrong password
+					this.password = Employee.generatePassword();
+					this.failureText = "Password was incorrect.";
 				}
 			break;			
 		}
@@ -61,7 +67,6 @@ public class Request {
 		this.token = "default";
 		this.securityAnswer = "default";
 		this.valid = valid;
-		this.failureText = "default";
 	}
 	
 	public String toString(){
@@ -134,7 +139,7 @@ public class Request {
 		this.token = updatedVal;
 	}
 	
-	public void setSecurityAndwer(String updatedVal){
+	public void setSecurityAnswer(String updatedVal){
 		this.securityAnswer = updatedVal;
 	}
 	

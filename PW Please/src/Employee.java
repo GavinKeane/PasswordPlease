@@ -123,8 +123,8 @@ public class Employee {
 	/*
 		Generate a password consisting of word + random numbers + special character
 	*/
-	private String generatePassword(){
-		List<String> pool1 = new ArrayList<String>();
+	public static String generatePassword(){
+		ArrayList<String> pool1 = new ArrayList<String>();
 		pool1.add("satisfaction");
 		pool1.add("desk");
 		pool1.add("clothes");
@@ -145,7 +145,7 @@ public class Employee {
 		pool1.add("teaching");
 		pool1.add("application");
 		pool1.add("possibility");
-		List<String> pool2 = new ArrayList<String>();
+		ArrayList<String> pool2 = new ArrayList<String>();
 		pool2.add("advice");
 		pool2.add("theory");
 		pool2.add("interaction");
@@ -166,7 +166,7 @@ public class Employee {
 		pool2.add("inspector");
 		pool2.add("love");
 		pool2.add("city");
-		List<String> pool3 = new ArrayList<String>();
+		ArrayList<String> pool3 = new ArrayList<String>();
 		pool3.add("0");
 		pool3.add("1");
 		pool3.add("2");
@@ -177,7 +177,7 @@ public class Employee {
 		pool3.add("7");
 		pool3.add("8");
 		pool3.add("9");
-		List<String> pool4 = new ArrayList<String>();
+		ArrayList<String> pool4 = new ArrayList<String>();
 		pool4.add("!");
 		pool4.add("@");
 		pool4.add("#");
@@ -201,11 +201,11 @@ public class Employee {
 		pool4.add(":");
 		pool4.add("{");
 		pool4.add("}");
-		random rand = new Random();
+		Random rand = new Random();
 		int ran1 = rand.nextInt(20);
 		int ran2 = rand.nextInt(20);
 		int ran3 = rand.nextInt(10);
-		int ran4 = rand.nextInt(25);
+		int ran4 = rand.nextInt(22);
 		String password = pool1.get(ran1) + pool2.get(ran2) + pool3.get(ran3) + pool4.get(ran4);
 		return password;
 	}
