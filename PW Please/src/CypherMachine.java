@@ -94,11 +94,11 @@ public class CypherMachine {
     }
 
     public String Encrypt(String Password){
-
+      return null;
     }
 
     private String Shiftcipher(String Password){
-
+      return null;
     }
 
 }
