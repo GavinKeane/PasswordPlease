@@ -1,3 +1,15 @@
+/*
+  classes used for encrypt and generate the password.
+  3/1 Yuxuan Hu - constructors
+                - getPassword
+  3/2 Yuxuan Hu - encrypt function
+
+
+
+*/
+
+
+
 import java.util.ArrayList;
 import java.util.Random;
 public class CypherMachine {
@@ -92,13 +104,26 @@ public class CypherMachine {
       String password = pool1.get(ran1) + pool2.get(ran2) + pool3.get(ran3) + pool4.get(ran4);
       return password;
     }
-
+    //Input is the Passward. Function would use a random way to encrypt the plaintext
+    //Renturn the ciphertext
     public String Encrypt(String Password){
-      return null;
+      String encrypt = ShiftCipher(Password);
+      return return encrypt;
     }
 
-    private String Shiftcipher(String Password){
-      return null;
+    //Shift the plaintext random positions down the alphabet
+    //Input password
+    //return ciphertext
+    private String ShiftCipher(String Password){
+      String output = "";
+      Random rand = new Random();
+      int s = rand.nextInt(25);
+      for (int i=0; i<Password.length(); i++)
+        {
+            char ch = (char)(((int)Password.charAt(i) + s - 97) % 26 + 97);
+            output = output + ch;
+        }
+      return output;
     }
 
 }
