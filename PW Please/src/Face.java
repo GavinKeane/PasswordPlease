@@ -12,6 +12,11 @@ public class Face {
 	private String previousFace = ":^)";
 
 	public Face() {
+		replenish();
+	}
+	
+	
+	private void replenish() {
 		faces.put("( ͡° ͜ʖ ͡°)", "3,9");
 		faces.put("٩(⁎❛ᴗ❛⁎)۶", "3,5");
 		faces.put("(ノಠ益ಠ)ノ", "2,4");
@@ -60,8 +65,8 @@ public class Face {
 		try {
 			itemToBeRemoved = rand.nextInt(faceSets.size());
 		} catch (Exception e) {
-			System.out.println("There is hardlimit of: " + faces.size() + " employees due to a lack of unique faces in Face.java");
-			System.exit(0);
+			replenish();
+			itemToBeRemoved = rand.nextInt(faceSets.size());
 		}
 		facePair = faceSets.remove(itemToBeRemoved);
 		return facePair;

@@ -22,7 +22,6 @@ public class PasswordPlease {
 		Game.println("Welcome to Password, Please");
 
 		//printListOfEmployees(1);
-		// DAY ONE
 
 	}
 
