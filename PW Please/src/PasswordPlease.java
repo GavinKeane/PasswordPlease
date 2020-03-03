@@ -8,7 +8,7 @@ public class PasswordPlease {
 	public static void main(String[] args) {
 		// generate random employee list
 		List<Employee> employees = new ArrayList<>();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 19; i++) {
 			Employee e = new Employee();
 		}
 		
@@ -22,7 +22,6 @@ public class PasswordPlease {
 		System.out.println("Welcome to Password, Please");
 
 		//printListOfEmployees(1);
-		// DAY ONE
 
 	}
 
