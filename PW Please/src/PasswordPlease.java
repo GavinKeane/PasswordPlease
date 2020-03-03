@@ -19,7 +19,7 @@ public class PasswordPlease {
 		//play day 1
 		day1();
 		
-		System.out.println("Welcome to Password, Please");
+		Game.println("Welcome to Password, Please");
 
 		//printListOfEmployees(1);
 		// DAY ONE
@@ -67,24 +67,24 @@ public class PasswordPlease {
 				
 				// Print first & last name
 				int nameSize = (e.getFirstname() + " " + e.getLastname()).length();
-				System.out.print(e.getFirstname() + " " + e.getLastname());
+				Game.print(e.getFirstname() + " " + e.getLastname());
 				printSpaces(largestName - nameSize + spacing);
 
 				// Print Username
 				int usernameSize = e.getUsername().length();
-				System.out.print(e.getUsername());
+				Game.print(e.getUsername());
 				printSpaces(largestUsername - usernameSize + spacing);
 
 				// Print password
 				int passwordSize = e.getPassword().length();
-				System.out.print(e.getPassword());
+				Game.print(e.getPassword());
 				printSpaces(largestPassword - passwordSize + spacing);
 			}
 
 			if (day > 1) {
 				// Print Role
 				int roleSize = e.getRole().length();
-				System.out.print(e.getRole());
+				Game.print(e.getRole());
 				printSpaces(largestRole - roleSize + spacing);
 			}
 
@@ -92,17 +92,17 @@ public class PasswordPlease {
 				// Print Face
 				// IMPORTANT - Faces must be printed LAST because of uniform-width problems
 				int faceSize = e.getFace(0).length();
-				System.out.print(e.getFace(0));
+				Game.print(e.getFace(0));
 				printSpaces(largestFace - faceSize + spacing);
 			}
 
-			System.out.println();
+			Game.println("");
 		}
 	}
 
 	private static void printSpaces(int numberOfSpaces) {
 		for (int i = 0; i < numberOfSpaces; i++) {
-			System.out.print(" ");
+			Game.print(" ");
 		}
 	}
 	
@@ -128,22 +128,22 @@ public class PasswordPlease {
 		//play each request
 		for(int i = 0; i < requests.size(); i++){
 			Request r = requests.get(i);
-			System.out.println("Incoming request from " + r.getUsername());
+			Game.println("Incoming request from " + r.getUsername());
 		
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
 			while (!decisionMade){
-				System.out.println("");
+				Game.println("");
 				String command = in.nextLine();
 				switch(command.toUpperCase()){
 					case "LIST":
 						printListOfEmployees(1);
 						break;
 					case "HELP":
-						System.out.println(listCommands(1));
+						Game.println(listCommands(1));
 						break;
 					case "PASSWORD":
-						System.out.println(r.getPassword());
+						Game.println(r.getPassword());
 						break;
 					case "APPROVE":
 						decisionMade = true;
@@ -151,9 +151,9 @@ public class PasswordPlease {
 							score = score + 10; //add to score
 						}else{
 							score = score - 10;
-							System.out.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
+							Game.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
 						}
-						System.out.println("SCORE: " + score);
+						Game.println("SCORE: " + score);
 						break;
 					case "DENY":
 						decisionMade = true;
@@ -161,12 +161,12 @@ public class PasswordPlease {
 							score = score + 10;
 						}else{
 							score = score-10;
-							System.out.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
+							Game.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
 						}
-						System.out.println("SCORE: " + score);
+						Game.println("SCORE: " + score);
 						break;
 					default:
-						System.out.println("Command not recognized. Type \"HELP\" for list of commands.");
+						Game.println("Command not recognized. Type \"HELP\" for list of commands.");
 				}
 			}
 		}

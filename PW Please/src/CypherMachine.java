@@ -108,7 +108,7 @@ public class CypherMachine {
     //Renturn the ciphertext
     public String Encrypt(String Password){
       String encrypt = ShiftCipher(Password);
-      return return encrypt;
+      return encrypt;
     }
 
     //Shift the plaintext random positions down the alphabet
