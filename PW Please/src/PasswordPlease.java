@@ -4,6 +4,7 @@ import java.util.*;
 
 
 public class PasswordPlease {
+<<<<<<< Updated upstream
 
     public static void main(String[] args) {
         // generate random employee list
@@ -20,6 +21,23 @@ public class PasswordPlease {
         day1();
         
         
+=======
+	public static void main(String[] args) {
+		// generate random employee list
+		List<Employee> employees = new ArrayList<>();
+		for (int i = 0; i < 19; i++) {
+			Employee e = new Employee();
+		}
+		
+		//test manual employee creation
+		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");	
+		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
+	
+		//play day 1
+		day1();
+		
+		Game.println("Welcome to Password, Please");
+>>>>>>> Stashed changes
 
         //printListOfEmployees(1);
         // DAY ONE
@@ -100,6 +118,7 @@ public class PasswordPlease {
         }
     }
 
+<<<<<<< Updated upstream
     private static void printSpaces(int numberOfSpaces) {
         for (int i = 0; i < numberOfSpaces; i++) {
             System.out.print(" ");
@@ -174,4 +193,37 @@ public class PasswordPlease {
         
         in.close();
     }
+=======
+	private static void printSpaces(int numberOfSpaces) {
+		for (int i = 0; i < numberOfSpaces; i++) {
+			Game.print(" ");
+		}
+	
+	}
+	
+	//Play day 1
+	private static void day1() {
+		int score = 0;
+		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 10; i++){
+			Request r = new Request(1);
+			requests.add(r);
+		}
+	
+		//play each request
+		for(int i = 0; i < requests.size(); i++){
+			Request r = requests.get(i);
+			Game.println("Incoming request from " + r.getUsername());
+			Game.println("");
+			boolean decisionMade = false;
+			while (!decisionMade)
+			{
+				decisionMade = Commands.HandleCommands(r, 1);
+			}
+		}
+	}
+	
+>>>>>>> Stashed changes
 }
