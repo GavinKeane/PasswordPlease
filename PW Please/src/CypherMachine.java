@@ -107,7 +107,15 @@ public class CypherMachine {
     //Input is the Passward. Function would use a random way to encrypt the plaintext
     //Renturn the ciphertext
     public String Encrypt(String Password){
-      String encrypt = ShiftCipher(Password);
+      Random rand = new Random();
+      String encrypt = "";
+      int s = rand.nextInt(2);
+      if(s == 0){
+        encrypt = ShiftCipher(Password);
+      }else if(s == 1){
+        encrypt = MACipher(Password);
+      }
+
       return encrypt;
     }
 
@@ -126,4 +134,93 @@ public class CypherMachine {
       return output;
     }
 
+    private String MACipher(String Password){
+      String output = "";
+      for (int i=0; i<Password.length(); i++)
+        {
+          char tmp = MAcase(Password.charAt(i));
+          output += tmp;
+        }
+      return output;
+    }
+
+    private char MAcase(char input){
+      char output =;
+      if(input == 'a'){
+        output = 'n';
+      }else if(input == 'b'){
+        output = 'o';
+      }else if(input == 'c'){
+        output = 'k';
+      }else if(input == 'd'){
+        output = 'e';
+      }else if(input == 'e'){
+        output = 'y';
+      }else if(input == 'f'){
+        output = 'a';
+      }else if(input == 'g'){
+        output = 'b';
+      }else if(input == 'h'){
+        output = 'c';
+      }else if(input == 'i'){
+        output = 'd';
+      }else if(input == 'j'){
+        output = 'f';
+      }else if(input == 'k'){
+        output = 'g';
+      }else if(input == 'l'){
+        output = 'h';
+      }else if(input == 'm'){
+        output = 'i';
+      }else if(input == 'n'){
+        output = 'j';
+      }else if(input == 'o'){
+        output = 'l';
+      }else if(input == 'p'){
+        output = 'm';
+      }else if(input == 'q'){
+        output = 'p';
+      }else if(input == 'r'){
+        output = 'q';
+      }else if(input == 's'){
+        output = 'r';
+      }else if(input == 't'){
+        output = 's';
+      }else if(input == 'u'){
+        output = 't';
+      }else if(input == 'v'){
+        output = 'u';
+      }else if(input == 'w'){
+        output = 'v';
+      }else if(input == 'x'){
+        output = 'w';
+      }else if(input == 'y'){
+        output = 'x';
+      }else if(input == 'z'){
+        output = 'z';
+      }else if(input == '0'){
+        output = '2';
+      }else if(input == '1'){
+        output = '3';
+      }else if(input == '2'){
+        output = '4';
+      }else if(input == '3'){
+        output = '5';
+      }else if(input == '4'){
+        output = '6';
+      }else if(input == '5'){
+        output = '7';
+      }else if(input == '6'){
+        output = '8';
+      }else if(input == '7'){
+        output = '9';
+      }else if(input == '8'){
+        output = '0';
+      }else if(input == '9'){
+        output = '1';
+      }else{
+        output = input;
+      }
+      return output;
+    }
 }
