@@ -6,26 +6,22 @@ import java.util.*;
 public class PasswordPlease {
 
 	public static void main(String[] args) {
+		//test manual employee creation
+		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password123", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");
+	
 		// generate random employee list
-		List<Employee> employees = new ArrayList<>();
 		for (int i = 0; i < 19; i++) {
 			Employee e = new Employee();
 		}
 		
-		//test manual employee creation
-		Employee jeff = new Employee("Jones", "Jeffrey", "IT", "password", "(o W o)", "6143591872", "What is the name of your first pet?", "Bandit");	
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
-	
-		//play day 1
-		day1();
 		
-		Game.println("Welcome to Password, Please");
-
-		//printListOfEmployees(1);
-
+		Game.intro();
+		//play day 1
+		Game.day1();
 	}
 
-	private static void printListOfEmployees(int day) {
+	public static void printListOfEmployees(int day) {
 		int largestName = 0;
 		int largestUsername = 0;
 		int largestFace = 0;
@@ -105,72 +101,4 @@ public class PasswordPlease {
 		}
 	}
 	
-	//return list of commands available on current day
-	private static String listCommands(int day) {
-		String s = "LIST      Show list of employees and their credentials \nAPPROVE   Grant access to the current request \nDENY      Deny the current request";	
-		//TODO update to show day relevant commands
-		return s;
-	}
-	
-	//Play day 1
-	private static void day1() {
-		Scanner in = new Scanner(System.in);
-		int score = 0;
-		
-		//generate requests for day
-		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 10; i++){
-			Request r = new Request(1);
-			requests.add(r);
-		}
-	
-		//play each request
-		for(int i = 0; i < requests.size(); i++){
-			Request r = requests.get(i);
-			Game.println("Incoming request from " + r.getUsername());
-		
-			//get user input until user approves or denies request
-			boolean decisionMade = false;
-			while (!decisionMade){
-				Game.println("");
-				String command = in.nextLine();
-				switch(command.toUpperCase()){
-					case "LIST":
-						printListOfEmployees(1);
-						break;
-					case "HELP":
-						Game.println(listCommands(1));
-						break;
-					case "PASSWORD":
-						Game.println(r.getPassword());
-						break;
-					case "APPROVE":
-						decisionMade = true;
-						if(r.getValid()){
-							score = score + 10; //add to score
-						}else{
-							score = score - 10;
-							Game.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
-						}
-						Game.println("SCORE: " + score);
-						break;
-					case "DENY":
-						decisionMade = true;
-						if(!r.getValid()){	
-							score = score + 10;
-						}else{
-							score = score-10;
-							Game.println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n");
-						}
-						Game.println("SCORE: " + score);
-						break;
-					default:
-						Game.println("Command not recognized. Type \"HELP\" for list of commands.");
-				}
-			}
-		}
-		
-		
-		in.close();
-	}
 }
