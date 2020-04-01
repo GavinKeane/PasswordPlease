@@ -13,7 +13,7 @@ public class Request {
 	private String encryptedPassword;
 	private String system; //system user is trying to access
 	private String face;
-	private String token;
+	private boolean hasFactor;
 	private String securityAnswer;
 	private boolean valid;
 	private String failureText; //text to show if player chooses incorrectly
@@ -21,13 +21,13 @@ public class Request {
 	/*
 		Constructors
 	*/
-	public Request(String username, String password, String encryptedPassword, String system, String face, String token, String securityAnswer, boolean valid, String failureText){
+	public Request(String username, String password, String encryptedPassword, String system, String face, boolean hasFactor, String securityAnswer, boolean valid, String failureText){
 		this.username = username;
 		this.password = password;
 		this.encryptedPassword = encryptedPassword;
 		this.system = system;
 		this.face = face;
-		this.token = token;
+		this.hasFactor = hasFactor;
 		this.securityAnswer = securityAnswer;
 		this.valid = valid;
 		this.failureText = failureText;
@@ -65,7 +65,7 @@ public class Request {
 		this.encryptedPassword = "default";
 		this.system = "default";
 		this.face = "default";
-		this.token = "default";
+		this.hasFactor = true;
 		this.securityAnswer = "default";
 		this.valid = valid;
 	}
@@ -97,8 +97,8 @@ public class Request {
 		return this.face;
 	}
 	
-	public String getToken(){
-		return this.token;
+	public boolean getHasFactor(){
+		return this.hasFactor;
 	}
 	
 	public String getSecurityAnswer(){
@@ -136,8 +136,8 @@ public class Request {
 		this.face = updatedVal;
 	}
 	
-	public void setToken(String updatedVal){
-		this.token = updatedVal;
+	public void setHasFactor(boolean updatedVal){
+		this.hasFactor = updatedVal;
 	}
 	
 	public void setSecurityAnswer(String updatedVal){
