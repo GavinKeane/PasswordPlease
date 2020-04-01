@@ -16,13 +16,7 @@ public class PasswordPlease {
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
 		
-		System.out.println(Role.getValidSystem("IT"));
-		System.out.println(Role.getInvalidSystem("IT"));
-		System.out.println(Role.getValidSystem("Sales"));
-		System.out.println(Role.getInvalidSystem("Sales"));
-		System.out.println(Role.getValidSystem("Finance"));
-		System.out.println(Role.getInvalidSystem("Finance"));
-		
+		Game.println(Role.listRoles());
 		Game.intro();
 		//play day 1
 		Game.day1();

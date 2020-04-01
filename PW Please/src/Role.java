@@ -15,6 +15,18 @@ public class Role{
 	public static String[] financeSystems = {"Email", "Directory", "Corporate Network", "SAP", "Salesforce"};
 	public static String[] salesSystems = {"Email", "Directory", "Corporate Network", "Customer Database", "Salesforce"};
 	
+	//return a random role for employee creation
+	public static String getRandomRole(){
+		int rnd = new Random().nextInt(roles.length);
+		return roles[rnd];
+	}
+	
+	//print list of roles and systems they can access
+	public static String listRoles(){
+		String s = "ALL EMPLOYEES: Email, Directory, Corporate Network \nIT:            Mainframe, Unix \nFinance:       SAP, Salesforce \nSales:         Customer Database, Salesforce";
+		return s;
+	}
+	
 	//get a valid system for a certain role: used for request generation
 	public static String getValidSystem(String role){
 		String result = "";
