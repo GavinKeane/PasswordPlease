@@ -16,7 +16,6 @@ public class PasswordPlease {
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
 		
-		Game.println(Role.listRoles());
 		Game.intro();
 		//play day 1
 		Game.day1();
