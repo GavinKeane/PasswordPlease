@@ -133,7 +133,8 @@ public class Game{
 	}
 	
 	//Play day 1
-	public static void day1() {
+	//return -1 for game over, return 1 for successful completion
+	public static int day1() {
 		Scanner in = new Scanner(System.in);
 		int score = 0;
 		int textSpeed = 25000;
@@ -282,7 +283,7 @@ public class Game{
 				in.nextLine();
 				
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				return;
+				return -1;
 			}else{
 				print("\nWell, you're not programmed to lie, so I guess I'll have to believe you. Must have been a bug somewhere. I'll just reset your score for now.", textSpeed);
 				score = 0;
@@ -300,9 +301,12 @@ public class Game{
 			}else{
 				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				return -1;
 			}
 		}
-			
 		in.close();
+		return 1;	
 	}
+	
+	//TODO script days 2 through 6
 }

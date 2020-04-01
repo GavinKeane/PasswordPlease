@@ -1,0 +1,13 @@
+ROLES AND SYSTEMS
+
+ROLE: General (applies to ALL employees)
+SYSTEMS: Email, Directory, Corporate Network
+
+ROLE: IT
+SYSTEMS: Unix, Mainframe
+
+ROLE: Finance
+SYSTEMS: SAP, Salesforce
+
+ROLE: Sales
+SYSTEMS: Customer Database, Salesforce

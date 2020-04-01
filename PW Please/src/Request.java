@@ -51,6 +51,7 @@ public class Request {
 		this.failureText = "The request was valid.";
 		
 		switch(day){
+			//TODO invalid request generation for each day
 			case 1:
 				if (valid){
 					this.password = e.getPassword();
