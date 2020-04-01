@@ -145,7 +145,7 @@ public class CypherMachine {
     }
 
     private char MAcase(char input){
-      char output =;
+      char output;
       if(input == 'a'){
         output = 'n';
       }else if(input == 'b'){

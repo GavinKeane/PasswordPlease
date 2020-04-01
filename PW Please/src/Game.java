@@ -4,6 +4,14 @@
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 public class Game{
+	//Array of LIST outputs depending on the day. Day 1 is commandList[0]. Day 2 is commandList[1]. Day n is commandList[n-1];
+	public static String[] commandList = {"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nTIME: displays remaining time in the day\n", 
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP(phoneNumber): send 2FA code to employee's phone #\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP(phoneNumber): send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP(phoneNumber): send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nROLES: shows list of roles and what systems can be accessed\nTIME: displays remaining time in the day\n"
+  };
 
 	//print text character by character
 	public static void print(String text){
@@ -46,10 +54,15 @@ public class Game{
 	
 	//return list of commands available on current day
 	public static String listCommands(int day) {
-		String s = "LIST      Show list of employees and their credentials \nAPPROVE   Grant access to the current request \nDENY      Deny the current request";	
-		//TODO update to show day relevant commands
+		String s = commandList[day-1];
 		return s;
 	}
+	//Removes whitespace before and after (including tabs) and returns the command in uppercase 
+	private static String cleanseInput(String input) {
+		String command = input.replaceAll("\\s+", "");
+		return command.toUpperCase();
+	
+	  }
 	
 	public static void intro(){
 		Scanner in = new Scanner(System.in);
@@ -91,7 +104,7 @@ public class Game{
 		print("\nThis is a list of our employees and their credentials. If you ever need to look at it in the future, type LIST to pull it up.", textSpeed);
 		in.nextLine();
 		
-		Request tutorialRequest = new Request("Jones.1", "password123", "", "", "", "", "", true, "Request was valid."); 
+		Request tutorialRequest = new Request("Jones.1", "password123", "", "", "", true, "", true, "Request was valid."); 
 		
 		print("Looks like there's an incoming request.", textSpeed);
 		in.nextLine();
@@ -162,7 +175,7 @@ public class Game{
 			while (!decisionMade){
 				println("");
 				String command = in.nextLine();
-				switch(command.toUpperCase()){
+				switch(cleanseInput(command)){
 					case "LIST":
 						PasswordPlease.printListOfEmployees(1);
 						break;
@@ -202,7 +215,7 @@ public class Game{
 		print("\nHey. \nAI guy. \nYeah, I'm talking to you. Want some easy points? \nJust approve the next request, no questions asked. \nI'll make it worth your while.", textSpeed);
 		in.nextLine();
 		
-		Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","","","", false, "Very nice. Sending your points now. Be seeing you.");
+		Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","", false,"", false, "Very nice. Sending your points now. Be seeing you.");
 		requests.clear();
 		requests.add(request1);
 		
