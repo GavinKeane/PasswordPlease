@@ -16,9 +16,11 @@ public class PasswordPlease {
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
 		
-		Game.intro();
+		//Game.intro();
 		//play day 1
-		Game.day1();
+		//Game.day1();
+		//play day 2
+		Game.day2();
 	}
 
 	public static void printListOfEmployees(int day) {
@@ -71,12 +73,18 @@ public class PasswordPlease {
 				printSpaces(largestUsername - usernameSize + spacing);
 
 				// Print password
-				int passwordSize = e.getPassword().length();
-				Game.print(e.getPassword());
-				printSpaces(largestPassword - passwordSize + spacing);
+				if (day > 1){
+					int passwordSize = e.getEncryptedPassword().length();
+					Game.print(e.getEncryptedPassword());
+					printSpaces(largestPassword - passwordSize + spacing);
+				} else {
+					int passwordSize = e.getPassword().length();
+					Game.print(e.getPassword());
+					printSpaces(largestPassword - passwordSize + spacing);
+				}
 			}
 
-			if (day > 1) {
+			if (day > 2) {
 				// Print Role
 				int roleSize = e.getRole().length();
 				Game.print(e.getRole());

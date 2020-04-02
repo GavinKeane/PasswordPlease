@@ -59,6 +59,14 @@ public class Request {
 					this.password = Employee.generatePassword();
 					this.failureText = "Password was incorrect.";
 				}
+			case 2:
+				if(valid){
+					this.password = e.getEncryptedPassword();
+				} else {
+					this.password = Employee.generatePassword();
+					this.password = CypherMachine.Encrypt(this.password);
+					this.failureText = "Password was incorrect.";
+				}
 			break;			
 		}
 		

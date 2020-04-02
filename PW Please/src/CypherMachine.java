@@ -106,7 +106,7 @@ public class CypherMachine {
     }
     //Input is the Passward. Function would use a random way to encrypt the plaintext
     //Renturn the ciphertext
-    public String Encrypt(String Password){
+    public static String Encrypt(String Password){
       Random rand = new Random();
       String encrypt = "";
       int s = rand.nextInt(2);
@@ -122,7 +122,7 @@ public class CypherMachine {
     //Shift the plaintext random positions down the alphabet
     //Input password
     //return ciphertext
-    private String ShiftCipher(String Password){
+    private static String ShiftCipher(String Password){
       String output = "";
       Random rand = new Random();
       int s = rand.nextInt(25);
@@ -134,7 +134,7 @@ public class CypherMachine {
       return output;
     }
 
-    private String MACipher(String Password){
+    private static String MACipher(String Password){
       String output = "";
       for (int i=0; i<Password.length(); i++)
         {
@@ -144,7 +144,7 @@ public class CypherMachine {
       return output;
     }
 
-    private char MAcase(char input){
+    private static char MAcase(char input){
       char output;
       if(input == 'a'){
         output = 'n';

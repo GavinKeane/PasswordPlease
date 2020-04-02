@@ -6,12 +6,17 @@ import java.util.concurrent.TimeUnit;
 public class Game{
 	//Array of LIST outputs depending on the day. Day 1 is commandList[0]. Day 2 is commandList[1]. Day n is commandList[n-1];
 	public static String[] commandList = {"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nTIME: displays remaining time in the day\n", 
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nENCRYPTED PASSWORD:shows the encrypted password\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nROLES: shows list of roles and what systems can be accessed\nTIME: displays remaining time in the day\n"
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nROLES: shows list of roles and what systems can be accessed\nTIME: displays remaining time in the day\n"
   };
+  /** boolean array to keep track of the choices of the player
+   * each slot represents a choice per day
+   * so if choice[0] is true, then the player accepted points from Hacker.1337
+   */
+  public static boolean[] choices = {false, false, false, false, false, false};
 
 	//print text character by character
 	public static void print(String text){
@@ -151,7 +156,6 @@ public class Game{
 		Scanner in = new Scanner(System.in);
 		int score = 0;
 		int textSpeed = 25000;
-		boolean choice1 = false; //true if player accepted points from Hacker.1337
 		
 		print("\n============================\n          Day 1       \n============================", 10000);
 		print("\n\n", 200000);
@@ -250,7 +254,7 @@ public class Game{
 						}else{
 							if(r.getUsername().equals("Hacker.1337")){
 							score = score + 120937128;
-							choice1 = true;
+							choices[0] = true;
 							println("\nINCOMING MESSAGE from ?????: " + r.getFailureText());
 							}else{
 								score -= 20;
@@ -283,7 +287,7 @@ public class Game{
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
-		if(choice1){
+		if(choices[0]){
 			print("\nHold on", textSpeed*4);
 			print("...", textSpeed*4);
 			in.nextLine();
@@ -321,5 +325,232 @@ public class Game{
 		return 1;	
 	}
 	
-	//TODO script days 2 through 6
+
+	//Play day 2
+	//return -1 for game over, return 1 for successful completion
+	public static int day2() {
+		Scanner in = new Scanner(System.in);
+		int score = 0;
+		int textSpeed = 25000;
+		
+		print("\n============================\n          Day 2       \n============================", 10000);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: We've increased our security to include encrypted passwords now!", textSpeed);
+		print("\nYou can still check passwords however because we have equipped you with decryption software.", textSpeed);
+		print("\nSimply use DECRYPT to activate the software when a request comes through. Good luck on Day 2.", textSpeed);
+		print("\n\n", 200000);
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 4; i++){
+			Request r = new Request(2);
+			requests.add(r);
+		}
+	
+		//play each request
+		for(int i = 0; i < requests.size(); i++){
+			Request r = requests.get(i);
+			println("\nINCOMING REQUEST from " + r.getUsername());
+		
+			//get user input until user approves or denies request
+			boolean decisionMade = false;
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(cleanseInput(command)){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(2);
+						break;
+					case "HELP":
+						println(listCommands(2));
+						break;
+					case "PASSWORD":
+						println(r.getEncryptedPassword());
+						break;
+					case "DECRYPT":
+						println("Decryption: " + r.getPassword());
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						if(r.getValid()){
+							score = score + 10; //add to score
+						}else{
+							score = score - 20;
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						println("SCORE: " + score);
+						break;
+					case "DENY":
+						decisionMade = true;
+						if(!r.getValid()){	
+							score = score + 10;
+						}else{
+							score = score - 20;
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						println("SCORE: " + score);
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+				}
+			}
+		}
+		
+		if (choices[0] && score > 0)
+		{
+			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
+			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
+			println("but here's the thing...");
+			println("Friends help friends out, right?");
+			println("And I'm gonna need to borrow some of your score. So what do you say?");
+
+			print("\n\n", 200000);
+			println("APPROVE or DENY small loan of: 1");
+			switch(cleanseInput(in.nextLine())){
+				case "APPROVE":
+					choices[1] = true;
+					println("\nNOTICE: Withdrawal made in the amount of: " + (score -1) + "\nYour balance has been deducted.\n", 25000);
+					score -= (score-1);
+					println("Listen, I'm sorry. I promise I'll give it back later.");
+					println("Thanks, bye!");
+					break;
+				case "DENY":
+					println("What...    >:(");
+					println("Fine... keep your score. I'll remember this...");
+					break;
+			}	
+		} 
+		else if (choices[0] && score < 0) 
+		{
+			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
+			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
+			println("Looks like you're kind of down on your luck with a score of " + score + ".");
+			println("Don't worry, I'll help you out... what are friends for, right?");
+			print("\n\n", 200000);
+			print("[PRESS ENTER TO ACCEPT HELP FROM YourOl'BuddyOl'Pal]\n");
+			in.nextLine();
+			score = 0;
+			choices[1] = true;
+			println("\nNOTICE: Your score is now 0" + "\nYour balance has been reset.\n", 25000);
+			println("There you go. Clean start! Better luck tomorrow! Bye!");
+		}
+		else if (choices[0] && score ==0)
+		{
+			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
+			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
+			println("Wait... you have a score of 0??? That's not very good. Maybe I don't even need your help to get information.");
+			println("I'm just going to help myself! Bye!");
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
+		}
+		else {
+			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
+			println("AI guy... It's me again. Maybe we got off on the wrong foot...");
+			println("Listen all I need is a little bit of information about RioGrande and its customers. I'll be in and out before you know it.");
+			println("I am once again asking for your approval.");
+			Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","", false,"", false, "Very nice. Sending your points now. Be seeing you.");
+			requests.clear();
+			requests.add(request1);
+		
+			for(int i = 0; i < requests.size(); i++){
+				Request r = requests.get(i);
+				println("\nINCOMING REQUEST from " + r.getUsername());
+				//get user input until user approves or denies request
+				boolean decisionMade = false;
+				while (!decisionMade){
+					println("");
+					String command = in.nextLine();
+					switch(cleanseInput(command)){
+						case "LIST":
+							PasswordPlease.printListOfEmployees(2);
+							break;
+						case "HELP":
+							println(listCommands(2));
+							break;
+						case "PASSWORD":
+							println(r.getEncryptedPassword());
+							break;
+						case "DECRYPT":
+							println("Decryption: " + r.getPassword());
+							break;
+						case "APPROVE":
+							decisionMade = true;
+							if(r.getValid()){
+								score = score + 10; //add to score
+							}else{
+								if(r.getUsername().equals("Hacker.1337")){
+								score = score + 120937128;
+								choices[1] = true;
+								println("\nINCOMING MESSAGE from ?????: " + r.getFailureText());
+								}else{
+									score -= 20;
+									println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+								}
+							}
+							println("SCORE: " + score);
+							break;
+						case "DENY":
+							decisionMade = true;
+							if(!r.getValid()){	
+								score = score + 10;
+							}else{
+								score = score - 20;
+								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+							}
+							println("SCORE: " + score);
+							break;
+						default:
+							println("Command not recognized. Type \"HELP\" for list of commands.");
+					}
+				}
+			}
+		}
+		
+		//end of day 2
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
+		in.nextLine();
+		
+		print("\nYOUR SCORE: " + score, textSpeed*3);
+		in.nextLine();
+		
+		//check if player approve Hacker.1337's request
+		if(choices[1]){
+			print("\nWe've been seeing a lot of sketchy activity recently", textSpeed*4);
+			print("...", textSpeed*4);
+			in.nextLine();
+			
+			print("Do you know anything about this activity? \n[YES/NO] ", textSpeed);
+			String input = in.nextLine();
+			
+			if(input.equals("YES")){
+				print("\nWell, why didn't you do anything to stop it!? Looks like we may need to reevaluate the effectiveness of AI in security operations...", textSpeed);
+				in.nextLine();
+				
+				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				return -1;
+			}else{
+				print("\nOk, but keep your eye out for anything abnormal.", textSpeed);
+				in.nextLine();
+				print("\nGood work today. I'll see you tomorrow!\n", textSpeed);
+			}
+		}else{
+			if(score > 10){
+				print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
+				in.nextLine();
+			}else if(score < 0)
+			{
+				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
+				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				return -1;
+			}else{
+				print("You're score isn't looking too great. I'm going to need to see some improvement or you're looking at being scrapped.\n", textSpeed);
+				print("Better luck tomorrow.");
+				in.nextLine();
+			}
+		}
+		in.close();
+		return 1;	
+	}
+		//TODO script days 3 through 6
 }
