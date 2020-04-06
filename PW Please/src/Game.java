@@ -355,6 +355,7 @@ public class Game{
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
+			boolean canDecrypt = false;
 			while (!decisionMade){
 				println("");
 				String command = in.nextLine();
@@ -366,10 +367,15 @@ public class Game{
 						println(listCommands(2));
 						break;
 					case "PASSWORD":
+						canDecrypt = true;
 						println(r.getEncryptedPassword());
 						break;
 					case "DECRYPT":
-						println("Decryption: " + r.getPassword());
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
 						break;
 					case "APPROVE":
 						decisionMade = true;
@@ -400,24 +406,24 @@ public class Game{
 		if (choices[0] && score > 0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
-			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
-			println("but here's the thing...");
-			println("Friends help friends out, right?");
-			println("And I'm gonna need to borrow some of your score. So what do you say?");
+			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!",  textSpeed*2);
+			println("but here's the thing...",  textSpeed*2);
+			println("Friends help friends out, right?",  textSpeed*2);
+			println("And I'm gonna need to borrow some of your score. So what do you say?",  textSpeed*2);
 
 			print("\n\n", 200000);
-			println("APPROVE or DENY small loan of: 1");
+			println("APPROVE or DENY small loan of: 1",  textSpeed*3);
 			switch(cleanseInput(in.nextLine())){
 				case "APPROVE":
 					choices[1] = true;
 					println("\nNOTICE: Withdrawal made in the amount of: " + (score -1) + "\nYour balance has been deducted.\n", 25000);
 					score -= (score-1);
-					println("Listen, I'm sorry. I promise I'll give it back later.");
+					println("Listen, I'm sorry. I promise I'll give it back later.",  textSpeed*2);
 					println("Thanks, bye!");
 					break;
 				case "DENY":
-					println("What...    >:(");
-					println("Fine... keep your score. I'll remember this...");
+					println("What...    >:(", textSpeed*2);
+					println("Fine... keep your score. I'll remember this...",  textSpeed*2);
 					break;
 			}	
 		} 
@@ -446,9 +452,9 @@ public class Game{
 		}
 		else {
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
-			println("AI guy... It's me again. Maybe we got off on the wrong foot...");
-			println("Listen all I need is a little bit of information about RioGrande and its customers. I'll be in and out before you know it.");
-			println("I am once again asking for your approval.");
+			println("AI guy... It's me again. Maybe we got off on the wrong foot...", textSpeed*2);
+			println("Listen all I need is a little bit of information about RioGrande and its customers. \nI'll be in and out before you know it.", textSpeed*2);
+			println("I am once again asking for your approval.",  textSpeed*2);
 			Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","", false,"", false, "Very nice. Sending your points now. Be seeing you.");
 			requests.clear();
 			requests.add(request1);
