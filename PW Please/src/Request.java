@@ -41,9 +41,12 @@ public class Request {
 		//randomly decide whether request will be valid or not, 50/50 chance
 		int rand = new Random().nextInt(20);
 		boolean valid = true;
+		this.valid = true;
 		if (rand < 10){
 			valid = false;
+			this.valid = false;
 		}
+		
 		
 		//pick random Employee
 		Employee e = Employee.employees.get(new Random().nextInt(Employee.employees.size()));
@@ -53,16 +56,16 @@ public class Request {
 		switch(day){
 			//TODO invalid request generation for each day
 			case 1:
-				if (valid){
+				if (this.valid){
 					this.password = e.getPassword();
-					Game.println("Password: " + this.password);
+					//Game.println("Password: " + this.password);
 				}else{
 					this.password = Employee.generatePassword();
 					this.failureText = "Password was incorrect.";
 				}
 				break;
 			case 2:
-				if(valid){
+				if(this.valid){
 					this.password = e.getPassword();
 					this.encryptedPassword = e.getEncryptedPassword();
 				} else {

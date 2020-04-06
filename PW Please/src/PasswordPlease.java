@@ -17,7 +17,7 @@ public class PasswordPlease {
 		
 		//Game.intro();
 		//play day 1
-		Game.day1();
+		//Game.day1();
 		//play day 2
 		Game.day2();
 	}

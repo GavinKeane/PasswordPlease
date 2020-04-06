@@ -321,7 +321,7 @@ public class Game{
 				return -1;
 			}
 		}
-		in.close();
+		//in.close();
 		return 1;	
 	}
 	
@@ -352,7 +352,7 @@ public class Game{
 		for(int i = 0; i < requests.size(); i++){
 			Request r = requests.get(i);
 			println("\nINCOMING REQUEST from " + r.getUsername());
-		
+			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
 			while (!decisionMade){
