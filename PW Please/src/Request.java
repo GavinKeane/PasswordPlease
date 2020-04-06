@@ -55,27 +55,23 @@ public class Request {
 			case 1:
 				if (valid){
 					this.password = e.getPassword();
+					Game.println("Password: " + this.password);
 				}else{
 					this.password = Employee.generatePassword();
 					this.failureText = "Password was incorrect.";
 				}
+				break;
 			case 2:
 				if(valid){
-					this.password = e.getEncryptedPassword();
+					this.password = e.getPassword();
+					this.encryptedPassword = e.getEncryptedPassword();
 				} else {
 					this.password = Employee.generatePassword();
-					this.password = CypherMachine.Encrypt(this.password);
+					this.encryptedPassword = e.getEncryptedPassword();
 					this.failureText = "Password was incorrect.";
 				}
-			break;			
+				break;			
 		}
-		
-		this.encryptedPassword = "default";
-		this.system = "default";
-		this.face = "default";
-		this.hasFactor = true;
-		this.securityAnswer = "default";
-		this.valid = valid;
 	}
 	
 	public String toString(){

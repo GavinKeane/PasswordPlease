@@ -1,4 +1,3 @@
-
 //package pwplease;
 import java.util.*;
 
@@ -18,7 +17,7 @@ public class PasswordPlease {
 		
 		//Game.intro();
 		//play day 1
-		//Game.day1();
+		Game.day1();
 		//play day 2
 		Game.day2();
 	}
@@ -73,15 +72,11 @@ public class PasswordPlease {
 				printSpaces(largestUsername - usernameSize + spacing);
 
 				// Print password
-				if (day > 1){
-					int passwordSize = e.getEncryptedPassword().length();
-					Game.print(e.getEncryptedPassword());
-					printSpaces(largestPassword - passwordSize + spacing);
-				} else {
-					int passwordSize = e.getPassword().length();
-					Game.print(e.getPassword());
-					printSpaces(largestPassword - passwordSize + spacing);
-				}
+			
+				int passwordSize = e.getPassword().length();
+				Game.print(e.getPassword());
+				printSpaces(largestPassword - passwordSize + spacing);
+				
 			}
 
 			if (day > 2) {

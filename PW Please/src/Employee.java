@@ -53,7 +53,7 @@ public class Employee {
 		this.firstname = firstname;
 		this.role = role;
 		this.password = password;
-		this.encryptedPassword = CypherMachine.Encrypt(this.password); // TODO update this line once encryption is implemented
+		this.encryptedPassword = CypherMachine.Encrypt(password);
 		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
 		this.phone = phone;
 		this.securityQuestion = securityQuestion;
@@ -85,7 +85,7 @@ public class Employee {
 
 		this.role = "default";
 		this.password = generatePassword();
-		this.encryptedPassword = "default"; //TODO update this line once encryption is implemented
+		this.encryptedPassword = CypherMachine.Encrypt(this.password);
 		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
 		this.phone = "default";
 		this.securityQuestion = "default";
