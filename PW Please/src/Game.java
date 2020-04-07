@@ -402,10 +402,20 @@ public class Game{
 			}
 		}
 		
+		/**
+		 * End of day 2 encounter can result in 4 different options depending on what the choice from day 1 was:
+		 * if the hacker was approved in day 1, 
+		 * 			if you have a positive score, he can either borrow all of your score except 1
+		 * 			if you have a negative score, he will make your score 0
+		 * 			if you have a score of 0, he will bypass you and steal all information, resulting in a game over.
+		 * 
+		 * if the hacker was denied in day 1,
+		 * 			he will ask again.
+		 */
 		if (choices[0] && score > 0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
-			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!",  textSpeed*2);
+			println("AI guy... It's me again. I appreciate you helping me out before and\nI hope you enjoyed my little present!",  textSpeed*2);
 			println("but here's the thing...",  textSpeed*2);
 			println("Friends help friends out, right?",  textSpeed*2);
 			println("And I'm gonna need to borrow some of your score. So what do you say?",  textSpeed*2);
@@ -487,7 +497,7 @@ public class Game{
 								if(r.getUsername().equals("Hacker.1337")){
 								score = score + 120937128;
 								choices[1] = true;
-								println("\nINCOMING MESSAGE from ?????: " + r.getFailureText());
+								println("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: " + r.getFailureText());
 								}else{
 									score -= 20;
 									println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
@@ -499,6 +509,7 @@ public class Game{
 							decisionMade = true;
 							if(!r.getValid()){	
 								score = score + 10;
+								println("Fine... I get it... AI in security is eFfECTiVe. Pfff, we'll see...",  textSpeed*2);
 							}else{
 								score = score - 20;
 								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
@@ -513,6 +524,158 @@ public class Game{
 		}
 		
 		//end of day 2
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
+		in.nextLine();
+		
+		print("\nYOUR SCORE: " + score, textSpeed*3);
+		in.nextLine();
+		
+		//check if player approve Hacker.1337's request
+		if(choices[1]){
+			print("\nWe've been seeing a lot of sketchy activity recently", textSpeed*2);
+			print("...", textSpeed*4);
+			in.nextLine();
+			
+			print("Do you know anything about this activity?\n[YES/NO] ", textSpeed);
+			String input = in.nextLine();
+			input = cleanseInput(input);
+			if(input.equals("YES")){
+				print("\nWell, why didn't you do anything to stop it!? Looks like we may need to reevaluate the effectiveness of AI in security operations...", textSpeed);
+				in.nextLine();
+				
+				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				in.close();
+				return -1;
+			}else{
+				print("\nOk, but keep your eye out for anything abnormal.", textSpeed);
+				in.nextLine();
+				print("\nGood work today. I'll see you tomorrow!\n", textSpeed);
+			}
+		}else{
+			if(score > 10){
+				print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
+				in.nextLine();
+			}else if(score < 0)
+			{
+				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
+				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				in.close();
+				return -1;
+			}else{
+				print("You're score isn't looking too great. I'm going to need to see some improvement or you're looking at being scrapped.\n", textSpeed);
+				print("Better luck tomorrow.");
+				in.nextLine();
+			}
+		}
+		in.close();
+		return 1;	
+	}
+
+
+	//Play day 3
+	//return -1 for game over, return 1 for successful completion
+	public static int day3() {
+		Scanner in = new Scanner(System.in);
+		int score = 0;
+		int textSpeed = 25000;
+		print("\n============================\n          Day 3       \n============================", 10000);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Due to the continuing threat, we have once again increased our security.", textSpeed);
+		print("\nWe now want you to include biometric security measures: facial recognition.", textSpeed);
+		print("\nSimply use SCANFACE to scan the requester's face! Good luck on Day 3.", textSpeed);
+		print("\n\n", 200000);
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 4; i++){
+			Request r = new Request(3);
+			requests.add(r);
+		}
+	
+		//play each request
+		for(int i = 0; i < requests.size(); i++){
+			Request r = requests.get(i);
+			println("\nINCOMING REQUEST from " + r.getUsername());
+			//println("VALID: " + r.getValid());
+			//get user input until user approves or denies request
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(cleanseInput(command)){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(3);
+						break;
+					case "HELP":
+						println(listCommands(3));
+						break;
+					case "PASSWORD":
+						canDecrypt = true;
+						println(r.getEncryptedPassword());
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						if(r.getValid()){
+							score = score + 10; //add to score
+						}else{
+							score = score - 20;
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						println("SCORE: " + score);
+						break;
+					case "DENY":
+						decisionMade = true;
+						if(!r.getValid()){	
+							score = score + 10;
+						}else{
+							score = score - 20;
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						println("SCORE: " + score);
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+				}
+			}
+		}
+		//approved hacker on the first day
+		if (choices[0])
+		{
+			//worked with hacker on the second day, player owes hacker or hacker owes player (not going to pay back)
+			if (choices[1])
+			{
+
+			}
+			//did NOT work with hacker on the second day / hacker is mad
+			else {
+
+			}
+		//denied hacker on the first day
+		} else {
+			//worked with hacker on the second day, player does not owe hacker
+			if (choices[1])
+			{
+
+			}
+			//said no both times, opens up upgrade store
+			else {
+
+			}
+		}
+		
+		//end of day 3
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
 		in.nextLine();
 		
@@ -558,5 +721,5 @@ public class Game{
 		in.close();
 		return 1;	
 	}
-		//TODO script days 3 through 6
+		//TODO script days 4 through 6
 }

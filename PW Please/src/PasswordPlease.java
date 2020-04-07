@@ -19,7 +19,9 @@ public class PasswordPlease {
 		//play day 1
 		//Game.day1();
 		//play day 2
-		Game.day2();
+		//Game.day2();
+		//play day3
+		Game.day3();
 	}
 
 	public static void printListOfEmployees(int day) {
@@ -78,14 +80,6 @@ public class PasswordPlease {
 				printSpaces(largestPassword - passwordSize + spacing);
 				
 			}
-
-			if (day > 2) {
-				// Print Role
-				int roleSize = e.getRole().length();
-				Game.print(e.getRole());
-				printSpaces(largestRole - roleSize + spacing);
-			}
-
 			if (day > 2) {
 				// Print Face
 				// IMPORTANT - Faces must be printed LAST because of uniform-width problems
@@ -93,6 +87,15 @@ public class PasswordPlease {
 				Game.print(e.getFace(0));
 				printSpaces(largestFace - faceSize + spacing);
 			}
+
+			if (day > 6) {
+				// Print Role
+				int roleSize = e.getRole().length();
+				Game.print(e.getRole());
+				printSpaces(largestRole - roleSize + spacing);
+			}
+
+			
 
 			Game.println("");
 		}

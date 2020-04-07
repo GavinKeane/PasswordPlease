@@ -1,3 +1,4 @@
+
 /*
 	Class used to represent incoming access requests
 
@@ -5,23 +6,25 @@
 	
 */
 import java.util.*;
+
 public class Request {
-	
-	//Request variables
+
+	// Request variables
 	private String username;
 	private String password;
 	private String encryptedPassword;
-	private String system; //system user is trying to access
+	private String system; // system user is trying to access
 	private String face;
 	private boolean hasFactor;
 	private String securityAnswer;
 	private boolean valid;
-	private String failureText; //text to show if player chooses incorrectly
-	
+	private String failureText; // text to show if player chooses incorrectly
+
 	/*
-		Constructors
-	*/
-	public Request(String username, String password, String encryptedPassword, String system, String face, boolean hasFactor, String securityAnswer, boolean valid, String failureText){
+	 * Constructors
+	 */
+	public Request(String username, String password, String encryptedPassword, String system, String face,
+			boolean hasFactor, String securityAnswer, boolean valid, String failureText) {
 		this.username = username;
 		this.password = password;
 		this.encryptedPassword = encryptedPassword;
@@ -32,11 +35,11 @@ public class Request {
 		this.valid = valid;
 		this.failureText = failureText;
 	}
-	
+
 	/*
-		No-args constructor
-		Generates random request with information based on what day it is
-	*/
+	 * No-args constructor Generates random request with information based on what
+	 * day it is
+	 */
 	public Request(int day){	
 		//randomly decide whether request will be valid or not, 50/50 chance
 		int rand = new Random().nextInt(20);
@@ -53,18 +56,9 @@ public class Request {
 		this.username = e.getUsername();
 		this.failureText = "The request was valid.";
 		
-		switch(day){
-			//TODO invalid request generation for each day
-			case 1:
-				if (this.valid){
-					this.password = e.getPassword();
-					//Game.println("Password: " + this.password);
-				}else{
-					this.password = Employee.generatePassword();
-					this.failureText = "Password was incorrect.";
-				}
-				break;
-			case 2:
+		switch(day) {
+			case(1):
+			case(2):
 				if(this.valid){
 					this.password = e.getPassword();
 					this.encryptedPassword = e.getEncryptedPassword();
@@ -72,90 +66,115 @@ public class Request {
 					this.password = Employee.generatePassword();
 					this.encryptedPassword = e.getEncryptedPassword();
 					this.failureText = "Password was incorrect.";
+			}	
+			break;
+			case (3):
+				if (this.valid){
+					this.password = e.getPassword();
+					this.encryptedPassword = e.getEncryptedPassword();
+					this.face = e.getFace(0);
+				} else {
+					if (rand < 5) {
+						this.password = Employee.generatePassword();
+						this.encryptedPassword = e.getEncryptedPassword();
+						this.failureText = "Password was incorrect.";
+					} else if (rand == 10) 
+					{
+						this.password = Employee.generatePassword();
+						this.encryptedPassword = e.getEncryptedPassword();
+						this.face = e.getFace(2);
+						this.failureText = "Password and face were incorrect.";
+					}
+					else {
+						this.face = e.getFace(1);
+						this.failureText = "Face was incorrect.";
+					}
 				}
-				break;			
+				break;
 		}
+		
 	}
-	
-	public String toString(){
+
+
+	public String toString() {
 		return this.username + " | " + this.password + " | " + this.valid;
 	}
-	
+
 	/*
-		Getter methods
-	*/
-	public String getUsername(){
+	 * Getter methods
+	 */
+	public String getUsername() {
 		return this.username;
 	}
-	
-	public String getPassword(){
+
+	public String getPassword() {
 		return this.password;
 	}
-	
-	public String getEncryptedPassword(){
+
+	public String getEncryptedPassword() {
 		return this.encryptedPassword;
 	}
-	
-	public String getSystem(){
+
+	public String getSystem() {
 		return this.system;
 	}
-	
-	public String getFace(){
+
+	public String getFace() {
 		return this.face;
 	}
-	
-	public boolean getHasFactor(){
+
+	public boolean getHasFactor() {
 		return this.hasFactor;
 	}
-	
-	public String getSecurityAnswer(){
+
+	public String getSecurityAnswer() {
 		return this.securityAnswer;
 	}
-	
-	public boolean getValid(){
+
+	public boolean getValid() {
 		return this.valid;
 	}
-	
-	public String getFailureText(){
+
+	public String getFailureText() {
 		return this.failureText;
 	}
-	
+
 	/*
-		Setter methods
-	*/
-	public void setUsername(String updatedVal){
+	 * Setter methods
+	 */
+	public void setUsername(String updatedVal) {
 		this.username = updatedVal;
 	}
-	
-	public void setPassword(String updatedVal){
+
+	public void setPassword(String updatedVal) {
 		this.password = updatedVal;
 	}
-	
-	public void setEncryptedPassword(String updatedVal){
+
+	public void setEncryptedPassword(String updatedVal) {
 		this.encryptedPassword = updatedVal;
 	}
-	
-	public void setSystem(String updatedVal){
+
+	public void setSystem(String updatedVal) {
 		this.system = updatedVal;
 	}
-	
-	public void setFace(String updatedVal){
+
+	public void setFace(String updatedVal) {
 		this.face = updatedVal;
 	}
-	
-	public void setHasFactor(boolean updatedVal){
+
+	public void setHasFactor(boolean updatedVal) {
 		this.hasFactor = updatedVal;
 	}
-	
-	public void setSecurityAnswer(String updatedVal){
+
+	public void setSecurityAnswer(String updatedVal) {
 		this.securityAnswer = updatedVal;
 	}
-	
-	public void setValid(boolean updatedVal){
+
+	public void setValid(boolean updatedVal) {
 		this.valid = updatedVal;
 	}
-	
-	public void setFailureText(String updatedVal){
+
+	public void setFailureText(String updatedVal) {
 		this.failureText = updatedVal;
 	}
 }
