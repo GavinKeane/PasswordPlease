@@ -294,7 +294,7 @@ public class Game{
 			
 			print("Your score seems abnormally high. Are you hiding something? \n[YES/NO] ", textSpeed);
 			String input = in.nextLine();
-			
+			input = cleanseInput(input);
 			if(input.equals("YES")){
 				print("\nWell, that's a shame, looks like we'll have to uninstall you. Goodbye.", textSpeed);
 				in.nextLine();
@@ -332,7 +332,6 @@ public class Game{
 		Scanner in = new Scanner(System.in);
 		int score = 0;
 		int textSpeed = 25000;
-		
 		print("\n============================\n          Day 2       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: We've increased our security to include encrypted passwords now!", textSpeed);
 		print("\nYou can still check passwords however because we have equipped you with decryption software.", textSpeed);
@@ -343,7 +342,7 @@ public class Game{
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < 7; i++){
 			Request r = new Request(2);
 			requests.add(r);
 		}
@@ -522,13 +521,14 @@ public class Game{
 		
 		//check if player approve Hacker.1337's request
 		if(choices[1]){
-			print("\nWe've been seeing a lot of sketchy activity recently", textSpeed*4);
+			print("\nWe've been seeing a lot of sketchy activity recently", textSpeed*2);
 			print("...", textSpeed*4);
 			in.nextLine();
 			
-			print("Do you know anything about this activity? \n[YES/NO] ", textSpeed);
+			print("Do you know anything about this activity?\n[YES/NO] ", textSpeed);
 			String input = in.nextLine();
-			
+			input = cleanseInput(input);
+			Game.print("Input now: " + input);
 			if(input.equals("YES")){
 				print("\nWell, why didn't you do anything to stop it!? Looks like we may need to reevaluate the effectiveness of AI in security operations...", textSpeed);
 				in.nextLine();
