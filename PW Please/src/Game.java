@@ -17,6 +17,8 @@ public class Game{
    * so if choice[0] is true, then the player accepted points from Hacker.1337
    */
   public static boolean[] choices = {false, false, false, false, false, false};
+  
+  final static long DAYCYCLELENGTH = 45000; //this is 45 seconds (in ms for calcs) used for multiple calculations. Change to change day lengths
 
 	//print text character by character
 	public static void print(String text){
@@ -29,6 +31,31 @@ public class Game{
 			} catch (InterruptedException e) {
         System.err.format("IOException: %s%n", e);
       }
+		}
+	}
+	
+	//calculates the start of the day's time, call this before beginning the day and store into long val
+	public static long startTime() {
+		return System.currentTimeMillis();
+	}
+	
+	//Used for a conditional while for each the days, checks the time against global day var to see if the day is completed
+	public static boolean dayGoing(long timeBegan) {
+		long timeDepleted = System.currentTimeMillis() - timeBegan; //time elapsed
+		boolean completeCycle = timeDepleted < DAYCYCLELENGTH; //time in ms
+		return completeCycle;
+	}
+	
+	//Output the time left in the day by passing in the time the day started, if choice is after day time is over, state it.
+	public static void timeLeft(long timeBegan) {
+		long timeSpent = System.currentTimeMillis() - timeBegan; //time elapsed
+		long remain = (DAYCYCLELENGTH - (timeSpent))/1000; //convert the ms calculations to seconds before returning to display
+		if(remain > 0) {
+			System.out.println("");
+			System.out.println(remain + " seconds remaining on your shift.");
+		}else {
+			System.out.println("");
+			System.out.println("Looks like it's time for you to clock out for the day, make your final decision.");
 		}
 	}
 	
@@ -164,73 +191,33 @@ public class Game{
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < 3; i++){
+			Request r = new Request(1);
+			requests.add(r);
+		}
+		
+		Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","", false,"", false, "Very nice. Sending your points now. Be seeing you.");
+		requests.add(request1);
+		
+		//generate more requests for day
+		for (int i = 0; i < 11; i++){
 			Request r = new Request(1);
 			requests.add(r);
 		}
 	
-		//play each request
-		for(int i = 0; i < requests.size(); i++){
-			Request r = requests.get(i);
-			println("\nINCOMING REQUEST from " + r.getUsername());
-		
-			//get user input until user approves or denies request
-			boolean decisionMade = false;
-			while (!decisionMade){
-				println("");
-				String command = in.nextLine();
-				switch(cleanseInput(command)){
-					case "LIST":
-						PasswordPlease.printListOfEmployees(1);
-						break;
-					case "HELP":
-						println(listCommands(1));
-						break;
-					case "PASSWORD":
-						println(r.getPassword());
-						break;
-					case "APPROVE":
-						decisionMade = true;
-						if(r.getValid()){
-							score = score + 10; //add to score
-						}else{
-							score = score - 20;
-							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
-						}
-						println("SCORE: " + score);
-						break;
-					case "DENY":
-						decisionMade = true;
-						if(!r.getValid()){	
-							score = score + 10;
-						}else{
-							score = score - 20;
-							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
-						}
-						println("SCORE: " + score);
-						break;
-					default:
-						println("Command not recognized. Type \"HELP\" for list of commands.");
-				}
-			}
-		}
-		
-		print("\nINCOMING MESSAGE from ?????: ", textSpeed*2);
-		print("\nHey. \nAI guy. \nYeah, I'm talking to you. Want some easy points? \nJust approve the next request, no questions asked. \nI'll make it worth your while.", textSpeed);
-		in.nextLine();
-		
-		Request request1 = new Request("Hacker.1337", "h4cktHeW0rld", "","","", false,"", false, "Very nice. Sending your points now. Be seeing you.");
-		requests.clear();
-		requests.add(request1);
-		
-		for(int i = 0; i < 3; i++){
-			Request r = new Request(1);
-			requests.add(r);
-		}
-		
-		for(int i = 0; i < requests.size(); i++){
-			Request r = requests.get(i);
-			println("\nINCOMING REQUEST from " + r.getUsername());
+		long startTimeDay1 = startTime(); //obtain start time of day for calculations
+		int index = 0; //beginning of random username list
+		//checks day still valid for continuing and list hasn't been spammed through too quickly
+		while(dayGoing(startTimeDay1) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			if(!(r.getUsername().equals("Hacker.1337"))){
+			  println("\nINCOMING REQUEST from " + r.getUsername());
+			  }
+			else {
+			  print("\nINCOMING MESSAGE from ?????: ", textSpeed*2);
+			  print("\nHey. \nAI guy. \nYeah, I'm talking to you. Want some easy points? \nJust approve the next request, no questions asked. \nI'll make it worth your while.", textSpeed);
+			in.nextLine();}
 		
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
@@ -246,6 +233,9 @@ public class Game{
 						break;
 					case "PASSWORD":
 						println(r.getPassword());
+						break;
+					case "TIME":
+						timeLeft(startTimeDay1);
 						break;
 					case "APPROVE":
 						decisionMade = true;
@@ -340,16 +330,19 @@ public class Game{
 		print("[PRESS ENTER TO START]\n");
 		in.nextLine();
 		
-		//generate requests for day
+		//generate certain # of requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 7; i++){
+		for (int i = 0; i < 10; i++){
 			Request r = new Request(2);
 			requests.add(r);
 		}
 	
-		//play each request
-		for(int i = 0; i < requests.size(); i++){
-			Request r = requests.get(i);
+		//play day 2
+		long startTimeDay2 = startTime(); //obtain start time of day for calculations
+		int location = 0; //beginning of random username list
+		//checks day still valid for continuing and list hasn't been spammed through too quickly
+		while(dayGoing(startTimeDay2) && location < requests.size()){
+			Request r = requests.get(location);
 			println("\nINCOMING REQUEST from " + r.getUsername());
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
@@ -368,6 +361,9 @@ public class Game{
 					case "PASSWORD":
 						canDecrypt = true;
 						println(r.getEncryptedPassword());
+						break;
+					case "TIME":
+						timeLeft(startTimeDay2);
 						break;
 					case "DECRYPT":
 						if (canDecrypt){
