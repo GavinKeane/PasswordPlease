@@ -343,6 +343,7 @@ public class Game{
 		//checks day still valid for continuing and list hasn't been spammed through too quickly
 		while(dayGoing(startTimeDay2) && location < requests.size()){
 			Request r = requests.get(location);
+			location++; //increment index of users after retrieving one
 			println("\nINCOMING REQUEST from " + r.getUsername());
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
