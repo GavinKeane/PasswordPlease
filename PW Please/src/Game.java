@@ -3,6 +3,7 @@
 */
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.text.DecimalFormat;
 public class Game{
 	//Array of LIST outputs depending on the day. Day 1 is commandList[0]. Day 2 is commandList[1]. Day n is commandList[n-1];
 	public static String[] commandList = {"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nTIME: displays remaining time in the day\n", 
@@ -19,7 +20,14 @@ public class Game{
   public static boolean[] choices = {false, false, false, false, false, false};
   
   final static long DAYCYCLELENGTH = 45000; //this is 45 seconds (in ms for calcs) used for multiple calculations. Change to change day lengths
-
+  static long choiceStartTime = 0; //start time of new approval or denial
+  static long choiceEndTime = 0; //end time of approval or denial
+  static long totDecisionTime = 0; //convert ms to s for total time it took to make approval or denial decision
+  static int correctStreak = 1; //streak used for point calculations for correct streak
+  static int loseStreak = -1; //streak used for point calculations for incorrect choice streak
+  static float gameScore = 0; //total game score for the user throughout the game
+  static DecimalFormat dec = new DecimalFormat(); //format all decimal outputs
+  
 	//print text character by character
 	public static void print(String text){
 		char[] chars = text.toCharArray();
@@ -38,6 +46,52 @@ public class Game{
 	public static long startTime() {
 		return System.currentTimeMillis();
 	}
+	
+	//updates streak accordingly for correct or incorrect approval or denial
+    public static void updateStreak(boolean choice) {
+        if (choice == true) {
+            	loseStreak = -1;
+                correctStreak++;
+        } else {
+            correctStreak = 1;
+            loseStreak--;
+        }
+    }
+    
+    //convert total decision time which is in ms to s for score calculation
+    public static long decisionCalc(long startTime, long endTime) {
+    	long secondsPassed = ((endTime-startTime)/1000);
+    	return secondsPassed;
+    }
+    
+    //update game score based upon correct approval or denial standard score is set to 10 for correct or incorrect, streaks and time adjust
+    public static void updateScore(boolean choice, long startTime, long endTime) {
+    	int standardScore = 10;
+    	//calculate total time for the choice of approval or denial
+    	totDecisionTime = decisionCalc(startTime, endTime);
+    	//If choice is correct of approval or denial and less than 9 seconds has passed, bonus score added, otherwise just standard and streak
+    	if(choice == true) {
+    		if (totDecisionTime < 9) {
+    			double bonusScore = (((9 - totDecisionTime) / 9.0)
+    					* standardScore * correctStreak);
+    			dec.setMaximumFractionDigits(2);
+    			System.out.println("");
+    			System.out.println("Quick Time Score Bonus: " + dec.format(bonusScore));
+    			gameScore += bonusScore + (standardScore * correctStreak);
+    		} else {
+    			gameScore += standardScore * correctStreak;
+    		}
+    		System.out.println("Correct streak at " + correctStreak + "!");
+    		System.out.println("Correct Streak Point Bonus: " + (standardScore * correctStreak));
+    		updateStreak(choice);
+    	}else {
+    		gameScore += standardScore * loseStreak;
+    		System.out.println("");
+    		System.out.println("Incorrect Point deduction: " + (standardScore *loseStreak));
+    		System.out.println("Incorrect streak at: " + (-1*loseStreak));
+    		updateStreak(choice);
+    	}
+    }
 	
 	//Used for a conditional while for each the days, checks the time against global day var to see if the day is completed
 	public static boolean dayGoing(long timeBegan) {
@@ -181,7 +235,6 @@ public class Game{
 	//return -1 for game over, return 1 for successful completion
 	public static int day1() {
 		Scanner in = new Scanner(System.in);
-		int score = 0;
 		int textSpeed = 25000;
 		
 		print("\n============================\n          Day 1       \n============================", 10000);
@@ -211,6 +264,7 @@ public class Game{
 		while(dayGoing(startTimeDay1) && index < requests.size()){
 			Request r = requests.get(index);
 			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
 			if(!(r.getUsername().equals("Hacker.1337"))){
 			  println("\nINCOMING REQUEST from " + r.getUsername());
 			  }
@@ -239,29 +293,33 @@ public class Game{
 						break;
 					case "APPROVE":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(r.getValid()){
-							score = score + 10; //add to score
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
 							if(r.getUsername().equals("Hacker.1337")){
-							score = score + 120937128;
+							gameScore = gameScore + 120937128;
 							choices[0] = true;
 							println("\nINCOMING MESSAGE from ?????: " + r.getFailureText());
 							}else{
-								score -= 20;
+								updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 							}
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					case "DENY":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(!r.getValid()){	
-							score = score + 10;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					default:
 						println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -273,7 +331,7 @@ public class Game{
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your first day. Well done!", textSpeed);
 		in.nextLine();
 		
-		print("\nYOUR SCORE: " + score, textSpeed*3);
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -293,16 +351,16 @@ public class Game{
 				return -1;
 			}else{
 				print("\nWell, you're not programmed to lie, so I guess I'll have to believe you. Must have been a bug somewhere. I'll just reset your score for now.", textSpeed);
-				score = 0;
+				gameScore = 0;
 				in.nextLine();
 				
-				print("\nYOUR SCORE: " + score, textSpeed*3);
+				print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 				in.nextLine();
 				
 				print("\nThat should do it. I'll see you tomorrow!\n", textSpeed);
 			}
 		}else{
-			if(score >0){
+			if(gameScore >0){
 				print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
 				in.nextLine();
 			}else{
