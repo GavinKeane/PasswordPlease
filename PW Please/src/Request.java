@@ -90,7 +90,22 @@ public class Request {
 						this.failureText = "Face was incorrect.";
 					}
 				}
-				break;
+			break;
+			
+			
+			
+			
+			
+			case(6):
+				if(this.valid){
+					this.password = e.getPassword();
+					this.encryptedPassword = e.getEncryptedPassword();
+					this.face = e.getFace(0);
+					this.hasFactor = true;
+					this.securityAnswer = e.getSecurityAnswer();
+					this.system = Role.getValidSystem(e.getRole());
+				}
+			break;
 		}
 		
 	}

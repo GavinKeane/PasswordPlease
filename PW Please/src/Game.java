@@ -306,9 +306,8 @@ public class Game{
 				print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
 				in.nextLine();
 			}else{
-				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
-				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				return -1;
+				print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+				in.nextLine();
 			}
 		}
 		//in.close();

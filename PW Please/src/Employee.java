@@ -83,7 +83,7 @@ public class Employee {
 		this.lastname = lastnames[new Random().nextInt(lastnames.length)];
 		this.firstname = firstnames[new Random().nextInt(firstnames.length)];
 
-		this.role = "default";
+		this.role = Role.getRandomRole();
 		this.password = generatePassword();
 		this.encryptedPassword = CypherMachine.Encrypt(this.password);
 		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
