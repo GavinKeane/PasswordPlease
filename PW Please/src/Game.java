@@ -151,6 +151,7 @@ public class Game{
 	  }
 	
 	public static void intro(){
+		boolean choseDemo = false;
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
 		
@@ -159,11 +160,15 @@ public class Game{
 		print("[PRESS ENTER TO START]\n");
 		String input = in.nextLine();
 		
-		if (input.equals("DAY1")){
-			return;
+		if (input.equals("DEMO")){
+			choseDemo = true;
+			print("You have chosen the ACCELERATED SIMULATION. The game will progress much more rapidly.");
+			in.nextLine();
+			print("This is only advised for employee onboarding or class presentations.");
+			in.nextLine();
 		}
 		
-		print("INCOMING MESSAGE from CYBERSECURITY: Hello? Is this working?", textSpeed);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Hello? Is this working?", textSpeed);
 		in.nextLine();
 		
 		print("Ah, good, looks like your natural language processing is working. Let's get you up to speed.", textSpeed);
@@ -229,6 +234,9 @@ public class Game{
 		print("I think you're ready for your first day of work! If you have any questions, just type HELP.", textSpeed);
 		in.nextLine();
 		
+		if(choseDemo){
+			demo();
+		}
 	}
 	
 	//Play day 1
@@ -730,7 +738,7 @@ public class Game{
 		}
 		
 		//end of day 3
-		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your third day. Well done!", textSpeed);
 		in.nextLine();
 		
 		print("\nYOUR SCORE: " + score, textSpeed*3);
@@ -776,4 +784,241 @@ public class Game{
 		return 1;	
 	}
 		//TODO script days 4 through 6
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public static int demo(){
+			Scanner in = new Scanner(System.in);
+			int textSpeed = 25000;
+		
+			print("\n============================\n          Day 1       \n============================", 10000);
+			print("\n\n", 200000);
+			print("[PRESS ENTER TO START]\n");
+			in.nextLine();
+			
+			//shortened day 1
+			//generate requests for day
+			ArrayList<Request> requests = new ArrayList<Request>();
+			for (int i = 0; i < 5; i++){
+				Request r = new Request(1);
+				requests.add(r);
+			}
+			
+			long startTimeDay1 = startTime();
+			int index = 0;
+			
+			while(dayGoing(startTimeDay1) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+			boolean decisionMade = false;
+			println("\nINCOMING REQUEST from " + r.getUsername());
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(1);
+						break;
+					case "HELP":
+						println(listCommands(1));
+						break;
+					case "PASSWORD":
+						println(r.getPassword());
+						break;
+					case "TIME":
+						timeLeft(startTimeDay1);
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+			}
+			print("\nINCOMING MESSAGE from CYBERSECURITY: ", textSpeed*2);
+			print("Good work! I think you're ready to step things up a notch.", textSpeed);
+			in.nextLine();
+			println("From now on, passwords will be encrypted. To read a password in plaintext, use the DECRYPT command.", textSpeed);
+			println("Good luck!", textSpeed);
+			in.nextLine();
+			
+			//demo day 2
+			print("\n============================\n          Day 2       \n============================", 10000);
+			print("\n\n", 200000);
+			print("[PRESS ENTER TO START]\n");
+			in.nextLine();
+			
+			print("\nINCOMING MESSAGE from ?????: ", textSpeed*4);
+			print("Hey. You're the new AI thing right?", textSpeed*2);
+			in.nextLine();
+			print("I have a little", textSpeed*2);
+			print("...", textSpeed*8);
+			print(" proposition for you.", textSpeed*2);
+			in.nextLine();
+			print("Just approve the next request, no questions asked. I'll make it worth your while, if you catch my drift.", textSpeed*2);
+			in.nextLine();
+			
+			boolean choice1made = false;
+			boolean choice1 = false;
+			println("\nINCOMING REQUEST from Hacker.1337");
+			while(!choice1made){
+				String command = in.nextLine();
+				switch(cleanseInput(command)){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(2);
+						break;
+					case "HELP":
+						println(listCommands(2));
+						break;
+					case "PASSWORD":
+						println("askdjancmabcaoiejd");
+						break;
+					case "DECRYPT":
+						if (true){
+							println("Decryption: H4cKth3W0rlD");
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "APPROVE":
+						print("\nINCOMING MESSAGE from ?????: Pleasure doing business with you. I'll be in touch.", textSpeed * 2);
+						in.nextLine();
+						gameScore += 21389713;
+						println("SCORE: " + dec.format(gameScore));
+						choice1made = true;
+						choice1 = true;
+						break;
+					case "DENY":
+						print("\nINCOMING MESSAGE from ?????: Seems you haven't been programmed to understand subtlety. Oh well, your loss. I'll be in touch.", textSpeed * 2);
+						in.nextLine();
+						choice1made = true;
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+				}
+			}
+			
+			requests = new ArrayList<Request>();
+			for (int i = 0; i < 5; i++){
+				Request r = new Request(2);
+				requests.add(r);
+			}
+			
+			long startTimeDay2 = startTime();
+			index = 0;
+						
+			while(dayGoing(startTimeDay2) && index < requests.size()){
+				Request r = requests.get(index);
+				
+				index++; //increment index of users after retrieving one
+				choiceStartTime = System.currentTimeMillis();
+				
+				println("\nINCOMING REQUEST from " + r.getUsername());
+				//println("VALID: " + r.getValid());
+				//get user input until user approves or denies request
+				boolean decisionMade = false;
+				boolean canDecrypt = false;
+				while (!decisionMade){
+					println("");
+					String command = in.nextLine();
+					switch(cleanseInput(command)){
+						case "LIST":
+							PasswordPlease.printListOfEmployees(2);
+							break;
+						case "HELP":
+							println(listCommands(2));
+							break;
+						case "PASSWORD":
+							canDecrypt = true;
+							println(r.getEncryptedPassword());
+							break;
+						case "TIME":
+							timeLeft(startTimeDay2);
+							break;
+						case "DECRYPT":
+							if (canDecrypt){
+								println("Decryption: " + r.getPassword());
+							} else {
+								println("Please request the PASSWORD first before trying to DECRYPT.");
+							}
+							break;
+						case "APPROVE":
+							decisionMade = true;
+							choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+							if(r.getValid()){
+								updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+							}else{
+								updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+							}
+							dec.setMaximumFractionDigits(2);
+							println("SCORE: " + dec.format(gameScore));
+							break;
+						case "DENY":
+							decisionMade = true;
+							choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+							if(!r.getValid()){	
+								updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+							}else{
+								updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+							}
+							dec.setMaximumFractionDigits(2);
+							println("SCORE: " + dec.format(gameScore));
+							break;
+						default:
+							println("Command not recognized. Type \"HELP\" for list of commands.");
+					}
+				}
+			}
+		
+		
+			
+			return 1;
+		}
 }
