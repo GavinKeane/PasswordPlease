@@ -14,7 +14,6 @@ public class PasswordPlease {
 		}
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
-		
 		//Game.intro();
 		//play day 1
 		//Game.day1();
@@ -22,6 +21,12 @@ public class PasswordPlease {
 		//Game.day2();
 		//play day3
 		//Game.day3();
+	
+		printListOfEmployees(6);
+		for(int i = 0; i < 10; i++){
+			Request r = new Request(5);
+			System.out.println(r.getUsername() + " " + r.getPassword() + " " + r.getSystem() + " " + r.getFace() + " " + r.getHasFactor() + " " + r.getSecurityAnswer() + " " + r.getFailureText());	
+		}
 		Game.demo();
 	}
 
@@ -32,6 +37,7 @@ public class PasswordPlease {
 		int largestRole = 0;
 		int largestPassword = 0;
 		int largestPhone = 0;
+		int largestAnswer = 0;
 
 		for (int i = 0; i < Employee.employees.size(); i++) {
 			
@@ -54,6 +60,9 @@ public class PasswordPlease {
 			}
 			if (e.getPhone().length() > largestPhone) {
 				largestPhone = e.getPhone().length();
+			}
+			if(e.getSecurityAnswer().length() > largestAnswer){
+				largestAnswer = e.getSecurityAnswer().length();
 			}
 		}
 		
@@ -88,8 +97,22 @@ public class PasswordPlease {
 				Game.print(e.getFace(0));
 				printSpaces(largestFace - faceSize + spacing);
 			}
-
-			if (day > 6) {
+			
+			if(day > 3){
+				//print phone number
+				int phoneSize = e.getPhone().length();
+				Game.print(e.getPhone());
+				printSpaces(largestPhone - phoneSize + spacing);
+			}
+			
+			if (day > 4){
+				//print security answer
+				int answerSize = e.getSecurityAnswer().length();
+				Game.print(e.getSecurityAnswer());
+				printSpaces(largestAnswer - answerSize + spacing);
+			}
+			
+			if (day > 5) {
 				// Print Role
 				int roleSize = e.getRole().length();
 				Game.print(e.getRole());

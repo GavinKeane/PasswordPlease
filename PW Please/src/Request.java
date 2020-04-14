@@ -77,7 +77,7 @@ public class Request {
 						this.password = Employee.generatePassword();
 						this.encryptedPassword = e.getEncryptedPassword();
 						this.failureText = "Password was incorrect.";
-					} else if (rand == 10) 
+					} else if (rand == 9) 
 					{
 						this.password = Employee.generatePassword();
 						this.encryptedPassword = e.getEncryptedPassword();
@@ -90,19 +90,84 @@ public class Request {
 					}
 				}
 			break;
+			case (4):
+				this.password = e.getPassword();
+				this.encryptedPassword = e.getEncryptedPassword();
+				this.face = e.getFace(0);
+				this.hasFactor = true;
+				if(!this.valid){
+					if(rand < 3){
+						this.password = Employee.generatePassword();
+						this.encryptedPassword = e.getEncryptedPassword();
+						this.failureText = "Password was incorrect.";
+					}else if(rand < 5){
+						this.face = e.getFace(1);
+						this.failureText = "Face was incorrect.";
+					}else if(rand < 7){
+						this.face = e.getFace(2);
+						this.failureText = "Face was incorrect.";
+					}else{
+						this.hasFactor = false;
+						this.failureText = "Did not provide valid token.";
+					}
+				}
+			break;	
+			case(5):
+				this.password = e.getPassword();
+				this.encryptedPassword = e.getEncryptedPassword();
+				this.face = e.getFace(0);
+				this.hasFactor = true;
+				this.securityAnswer = e.getSecurityAnswer();
 				
-			
-				
-				
-				
+				if(!this.valid){
+					if(rand < 2){
+						this.password = Employee.generatePassword();
+						this.encryptedPassword = e.getEncryptedPassword();
+						this.failureText = "Password was incorrect.";
+					}else if(rand < 4){
+						this.face = e.getFace(1);
+						this.failureText = "Face was incorrect.";
+					}else if(rand < 6){
+						this.face = e.getFace(2);
+						this.failureText = "Face was incorrect.";
+					}else if(rand < 8){
+						this.hasFactor = false;
+						this.failureText = "Did not provide valid token.";
+					}else{
+						this.securityAnswer = Question.getWrongAnswer(e.getSecurityQuestion(), e.getSecurityAnswer());
+						this.failureText = "Security answer was incorrect.";
+					}
+				}
+			break;
 			case(6):
-				if(this.valid){
-					this.password = e.getPassword();
-					this.encryptedPassword = e.getEncryptedPassword();
-					this.face = e.getFace(0);
-					this.hasFactor = true;
-					this.securityAnswer = e.getSecurityAnswer();
-					this.system = Role.getValidSystem(e.getRole());
+				this.password = e.getPassword();
+				this.encryptedPassword = e.getEncryptedPassword();
+				this.face = e.getFace(0);
+				this.hasFactor = true;
+				this.securityAnswer = e.getSecurityAnswer();
+				this.system = Role.getValidSystem(e.getRole());
+				
+				if(!this.valid){
+					if(rand < 2){
+						this.password = Employee.generatePassword();
+						this.encryptedPassword = e.getEncryptedPassword();
+						this.failureText = "Password was incorrect.";
+					}else if(rand < 3){
+						this.face = e.getFace(1);
+						this.failureText = "Face was incorrect.";
+					}else if(rand < 4){
+						this.face = e.getFace(2);
+						this.failureText = "Face was incorrect.";
+					}else if(rand < 6){
+						this.hasFactor = false;
+						this.failureText = "Did not provide correct token.";
+					}else if(rand < 8){
+						this.securityAnswer = Question.getWrongAnswer(e.getSecurityQuestion(), e.getSecurityAnswer());
+						this.failureText = "Security answer was incorrect.";
+					}else{
+						this.system = Role.getInvalidSystem(e.getRole());
+						this.failureText = "Employee requested access to a restricted system.";
+					}
 				}
 			break;
 		}

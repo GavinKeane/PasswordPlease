@@ -91,8 +91,6 @@ public class Employee {
 		String[] s = Question.getQA();
 		this.securityQuestion = s[0];
 		this.securityAnswer = s[1];
-		//System.out.println(this.securityQuestion + " " + this.securityAnswer + " " + Question.getWrongAnswer(this.securityQuestion, this.securityAnswer));
-		System.out.println(this.phone);
 
 		//set username to lastname.# based on how many existing employees have their last name
 		int lastnameCount = 1;
