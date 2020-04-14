@@ -50,7 +50,6 @@ public class Request {
 			this.valid = false;
 		}
 		
-		
 		//pick random Employee
 		Employee e = Employee.employees.get(new Random().nextInt(Employee.employees.size()));
 		this.username = e.getUsername();
@@ -91,11 +90,11 @@ public class Request {
 					}
 				}
 			break;
+				
 			
-			
-			
-			
-			
+				
+				
+				
 			case(6):
 				if(this.valid){
 					this.password = e.getPassword();

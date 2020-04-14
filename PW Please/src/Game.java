@@ -1022,7 +1022,7 @@ public class Game{
 			}
 			
 			requests = new ArrayList<Request>();
-			for (int i = 0; i < 5; i++){
+			for (int i = 0; i < 3; i++){
 				Request r = new Request(2);
 				requests.add(r);
 			}
@@ -1095,7 +1095,46 @@ public class Game{
 				}
 			}
 		
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
+		in.nextLine();
 		
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+		
+		//check if player approve Hacker.1337's request
+		if(choice1){
+			print("\nHold on", textSpeed*4);
+			print("...", textSpeed*4);
+			in.nextLine();
+			
+			print("Your score seems abnormally high. Are you hiding something? \n[YES/NO] ", textSpeed);
+			String input = in.nextLine();
+			input = cleanseInput(input);
+			if(input.equals("YES")){
+				print("\nWell, that's a shame, looks like we'll have to uninstall you. Goodbye.", textSpeed);
+				in.nextLine();
+				
+				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+				return -1;
+			}else{
+				print("\nWell, you're not programmed to lie, so I guess I'll have to believe you. Must have been a bug somewhere. I'll just reset your score for now.", textSpeed);
+				gameScore = 0;
+				in.nextLine();
+				
+				print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+				in.nextLine();
+				
+				print("\nThat should do it. I'll see you tomorrow!\n", textSpeed);
+			}
+		}else{
+			if(gameScore >0){
+				print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
+				in.nextLine();
+			}else{
+				print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+				in.nextLine();
+			}
+		}
 			
 			return 1;
 		}

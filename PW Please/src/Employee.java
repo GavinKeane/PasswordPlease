@@ -87,9 +87,12 @@ public class Employee {
 		this.password = generatePassword();
 		this.encryptedPassword = CypherMachine.Encrypt(this.password);
 		this.faceSet = faceCollection.removeRemoveRandomFaceFromCollection();
-		this.phone = "default";
-		this.securityQuestion = "default";
-		this.securityAnswer = "default";
+		this.phone = DualFA.generatePhone();
+		String[] s = Question.getQA();
+		this.securityQuestion = s[0];
+		this.securityAnswer = s[1];
+		//System.out.println(this.securityQuestion + " " + this.securityAnswer + " " + Question.getWrongAnswer(this.securityQuestion, this.securityAnswer));
+		System.out.println(this.phone);
 
 		//set username to lastname.# based on how many existing employees have their last name
 		int lastnameCount = 1;
