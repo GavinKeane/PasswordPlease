@@ -1,6 +1,17 @@
 import java.util.*;
 import java.util.Random;
 public class DualFA{
+		public static String generatePhone(){
+			String numbers = "0123456789";
+      Random r = new Random();
+      String phone = "";
+      for (int i = 0; i < 10; i++)
+      {
+          phone += numbers.charAt(r.nextInt(numbers.length()));
+      }
+      return phone;
+		}
+
     public static String GenerateOTP() {
         String numbers = "0123456789";
         Random r = new Random();

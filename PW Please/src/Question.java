@@ -1,23 +1,23 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 public class Question {
 
-    String[][] list = new String[][] {
-            { "Where are you from", "North America", "South America", "Asia",
-                    "Europe" },
-            { "Which sport do you like better ?", "Tennis ball", "Football",
-                    "BasketBall", "Swimming" },
-            { "What personality do you think you belong to?", "Architect",
-                    "Logician", "Commander", "Debater" },
-            { "What fruit do you like better", "Apple", "Banana", "Peach",
-                    "Watermelon" },
-            { "Which month are you born ? ", "January, " + "Feburary, March",
-                    "April, May, June", "July, August, September",
-                    "October, November, December" },
-            { "What food do you like better", "Pasta", "Hamburgers",
-                    "Fried Chicken", "Noodle" } };
+    public static String[][] list = new String[][] {
+            { "What continent are you from?", "North America", "South America", "Asia",
+                    "Europe", "Africa", "Australia", "Antarctica" },
+            { "What is your favorite sport?", "Tennis ball", "Football",
+                    "Basketball", "Swimming", "Soccer", "Volleyball", "Golf", "Cricket" },
+            { "What personality do you think you belong to?", "Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer" },
+            { "What is your favorite fruit?", "Apple", "Banana", "Peach",
+                    "Watermelon", "Pear", "Grape" },
+            { "What month were you born in? ",  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"},
+            { "What is your favorite food?", "Pasta", "Hamburgers",
+                    "Fried Chicken", "Noodle", "Pizza" } };
+   	
+   	public static Random rand = new Random();
    
     Map<String, String[]> map = new HashMap<>();
    
@@ -76,18 +76,16 @@ public class Question {
     public Map<String, String[]> constructQuestion() {
         // TODO Auto-generated method stub
         String[] temp = new String[] { "North America", "South America", "Asia",
-                "Europe" };
+                "Europe", "Africa", "Antarctica" };
         this.map.put("Where are you from", temp);
         temp = new String[] { "Tennis ball", "Football", "BasketBall",
                 "Swimming" };
         this.map.put("Which sport do you like better ?", temp);
-        temp = new String[] { "Architect", "Logician", "Commander", "Debater" };
+        temp = new String[] { "Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer" };
         this.map.put("What personality do you think you belong to?", temp);
         temp = new String[] { "Apple", "Banana", "Peach", "Watermelon" };
         this.map.put("What fruit do you like better", temp);
-        temp = new String[] { "January, " + "Feburary, March",
-                "April, May, June", "July, August, September",
-                "October, November, December" };
+        temp = new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
         this.map.put("Which month are you born ? ", temp);
         temp = new String[] { "Pasta", "Hamburgers", "Fried Chicken",
                 "Noodle" };
@@ -96,6 +94,34 @@ public class Question {
 
     }
 
+		public static String[] getQA(){
+			int r = rand.nextInt(6);
+			String q = list[r][0];
+			String a = list[r][rand.nextInt(list[r].length-1)+1];
+			String[] s = {q, a};
+			return s;
+		}
+		
+		public static String getWrongAnswer(String q, String a){
+			int index = -1;
+			for (int i=0;i<list.length;i++) {
+					if (list[i][0].equals(q)) {
+						  index = i;
+						  break;
+					}
+			}
+			
+			String wrong = a;
+			
+			if(index == -1){
+				wrong = "idk";
+			}else{
+				while(wrong.equals(a)){
+					wrong = list[index][rand.nextInt(list[index].length-1)+1];
+				}
+			}
+			return wrong;
+		}
     //for debugging, print each employee's firstname , his  security question and answer
     public void printStoredCorrectAnswer() {
         for (Entry<Employee, String[]> e : this.employeeMap.entrySet()) {
