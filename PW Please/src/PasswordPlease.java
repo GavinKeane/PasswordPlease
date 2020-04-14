@@ -21,8 +21,8 @@ public class PasswordPlease {
 		//play day 2
 		//Game.day2();
 		//play day3
-		//Game.day3();
-		Game.demo();
+		Game.day3();
+		//Game.demo();
 	}
 
 	public static void printListOfEmployees(int day) {

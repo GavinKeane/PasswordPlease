@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.text.DecimalFormat;
 public class Game{
+
 	//Array of LIST outputs depending on the day. Day 1 is commandList[0]. Day 2 is commandList[1]. Day n is commandList[n-1];
 	public static String[] commandList = {"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nTIME: displays remaining time in the day\n", 
 	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nTIME: displays remaining time in the day\n",
@@ -137,6 +138,20 @@ public class Game{
 		print(text, pauseTime);
 		System.out.println("");
 	}
+
+	//Checks string to ensure it's a string for hacker interaction
+	public static boolean isNumeric(String str) {
+        // null or empty
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
 	
 	//return list of commands available on current day
 	public static String listCommands(int day) {
@@ -637,6 +652,8 @@ public class Game{
 	//Play day 3
 	//return -1 for game over, return 1 for successful completion
 	public static int day3() {
+		choices[0] = true;
+		choices[1] = true;
 		Scanner in = new Scanner(System.in);
 		int score = 0;
 		int textSpeed = 25000;
@@ -718,71 +735,132 @@ public class Game{
 			//worked with hacker on the second day, player owes hacker or hacker owes player (not going to pay back)
 			if (choices[1])
 			{
-
+				boolean exit = false;
+				print("\nINCOMING MESSAGE from Michael Hackson: ", textSpeed*2);
+				println("My AI friend... don't think I have forgotten about our loan.");
+				println("It's time we get even.", textSpeed*2);
+				println("All I need is your Account Number, Routing Number and Social Security Number!");
+				print("\n\n", 200000);
+				while (!exit)
+				{
+					print("Account Number: ");
+					String response = in.nextLine();
+					if (response.length() < 10 || response.length() > 12 || !isNumeric(response))
+					{
+						println("What??? There is no way that's an account number... Are you lying to me?");
+						println("[YES] or [NO]");
+						response = in.nextLine();
+						if (cleanseInput(response).equals("YES"))
+						{
+							println("Ok, well stop. Give me your account number.");
+						}
+						else 
+						{
+							exit = true;
+							choices[2] = false;
+							println("Fine if you won't give me your account number, I'll get it by another means.");
+						}
+					}
+					else {
+						print("Routing Number: ");
+						response = in.nextLine();
+						println("Routing length: " + response.length());
+						if (response.length() != 9 || !isNumeric(response))
+						{
+							println("Ok you have to be lying to me... Routing numbers are 9 digits.");
+							print("[YES] or [NO]");
+							response = in.nextLine();
+							if (cleanseInput(response).equals("YES"))
+							{
+								choices[2] = false;
+								exit = true;
+								println("I don't take well to lying. I'll get my information some other way!");
+							}
+							else 
+							{
+								exit = true;
+								choices[2] = false;
+								println("Fine if you won't give me your information, I'll get it by another means.");
+							}
+						}
+						else{
+							while (!exit)
+							{
+								print("Social Security Number: ");
+								response = in.nextLine();
+								if (response.length() != 9 || !isNumeric(response))
+								{
+									println("-_-");
+									println("SSNs are 9 digits. You're lying.");
+									print("[YES] or [NO]");
+									response = in.nextLine();
+									if (cleanseInput(response).equals("YES"))
+									{
+										println("You're lying? Oh! It was just a mistake, haha. Try again!");
+									}
+									else 
+									{
+										choices[2] = false;
+										exit = true;
+											println("Fine if you won't give me your information, I'll get it by another means.");
+									}
+								} else{
+									choices[2] = true;
+									exit = true;
+									println("Great thanks! I'll get us squared away.");
+								}
+						}
+						}
+					}
+				}
 			}
 			//did NOT work with hacker on the second day / hacker is mad
 			else {
-
+				choices[2] = false;
+				//skip this branch, hacker is planning. no decision necessary here. 
 			}
 		//denied hacker on the first day
 		} else {
 			//worked with hacker on the second day, player does not owe hacker
 			if (choices[1])
 			{
-
+				print("\nINCOMING MESSAGE from Michael Hackson: ", textSpeed*2);
+				println("Pssst... AI guy");
+				println("Looks like your company added facial recognition, huh?");
+				println("I can't get the information I want... for now... but at what cost?");
+				print("When I do get in, because it'll happen eventually, I'll get their faces too. See you later, pal.");
+				print("\n\n", 200000);
 			}
-			//said no both times, opens up upgrade store
+			//said no both times, gets raise
 			else {
-
+				//I'll do this once the score gets updated for day 3 -Jeremiah
 			}
 		}
 		
 		//end of day 3
-		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your third day. Well done!", textSpeed);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your third day. Great job!", textSpeed);
 		in.nextLine();
 		
 		print("\nYOUR SCORE: " + score, textSpeed*3);
 		in.nextLine();
 		
-		//check if player approve Hacker.1337's request
-		if(choices[1]){
-			print("\nWe've been seeing a lot of sketchy activity recently", textSpeed*2);
-			print("...", textSpeed*4);
+		if(score > 10){
+			print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
 			in.nextLine();
-			
-			print("Do you know anything about this activity?\n[YES/NO] ", textSpeed);
-			String input = in.nextLine();
-			input = cleanseInput(input);
-			Game.print("Input now: " + input);
-			if(input.equals("YES")){
-				print("\nWell, why didn't you do anything to stop it!? Looks like we may need to reevaluate the effectiveness of AI in security operations...", textSpeed);
-				in.nextLine();
-				
-				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				return -1;
-			}else{
-				print("\nOk, but keep your eye out for anything abnormal.", textSpeed);
-				in.nextLine();
-				print("\nGood work today. I'll see you tomorrow!\n", textSpeed);
-			}
+		}else if(score < 0)
+		{
+			print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
 		}else{
-			if(score > 10){
-				print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
-				in.nextLine();
-			}else if(score < 0)
-			{
-				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
-				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				return -1;
-			}else{
-				print("You're score isn't looking too great. I'm going to need to see some improvement or you're looking at being scrapped.\n", textSpeed);
-				print("Better luck tomorrow.");
-				in.nextLine();
-			}
+			print("You're score isn't looking too great. I'm going to need to see some improvement or you're looking at being scrapped.\n", textSpeed);
+			print("Better luck tomorrow.");
+			in.nextLine();
 		}
 		in.close();
 		return 1;	
 	}
+	
 		//TODO script days 4 through 6
 		
 		
