@@ -861,7 +861,7 @@ public class Game{
 		return 1;	
 	}
 	
-		//TODO script days 4 through 6
+	//TODO script days 4 through 6
 		
 		
 		
@@ -869,13 +869,240 @@ public class Game{
 		
 		
 		
+	//Play day 5
+	//return -1 for game over, return 1 for successful completion
+	public static int day5() {
+		Scanner in = new Scanner(System.in);
+		int textSpeed = 25000;
+		
+		print("\n============================\n          Day 5       \n============================", 10000);
+		print("\n\n", 200000);
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 10; i++){
+			Request r = new Request(5);
+			requests.add(r);
+		}
+	
+		long startTimeDay5 = startTime(); //obtain start time of day for calculations
+		int index = 0; //beginning of random username list
+		//checks day still valid for continuing and list hasn't been spammed through too quickly
+		while(dayGoing(startTimeDay5) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+		 	println("\nINCOMING REQUEST from " + r.getUsername());
+		
+			//get user input until user approves or denies request
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(5);
+						break;
+					case "HELP":
+						println(listCommands(5));
+						break;
+					case "PASSWORD":
+						println(r.getEncryptedPassword());
+						canDecrypt = true;
+						break;
+					case "TIME":
+						timeLeft(startTimeDay5);
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "SENDOTP":
+						//TODO fill in properly
+						println("sending otp");
+						break;
+					case "SECURITYQUESTION":
+						println(r.getSecurityAnswer());
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+		}
+		
+		//end of day 5
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your fifth day. Well done!", textSpeed);
+		in.nextLine();
+		
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+	
+		if(gameScore >0){
+			print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
+			in.nextLine();
+		}else{
+			print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+			in.nextLine();
+		}
+		
+		//in.close();
+		return 1;	
+	}
 		
 		
+	//Play day 6
+	//return -1 for game over, return 1 for successful completion
+	public static int day6() {
+		Scanner in = new Scanner(System.in);
+		int textSpeed = 25000;
 		
+		print("\n============================\n          Day 5       \n============================", 10000);
+		print("\n\n", 200000);
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
 		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 10; i++){
+			Request r = new Request(6);
+			requests.add(r);
+		}
+	
+		long startTimeDay6 = startTime(); //obtain start time of day for calculations
+		int index = 0; //beginning of random username list
+		//checks day still valid for continuing and list hasn't been spammed through too quickly
+		while(dayGoing(startTimeDay6) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+		 	println("\nINCOMING REQUEST from " + r.getUsername());
 		
+			//get user input until user approves or denies request
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(6);
+						break;
+					case "HELP":
+						println(listCommands(6));
+						break;
+					case "PASSWORD":
+						println(r.getEncryptedPassword());
+						canDecrypt = true;
+						break;
+					case "TIME":
+						timeLeft(startTimeDay6);
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "SENDOTP":
+						//TODO fill in properly
+						println("sending otp");
+						break;
+					case "SECURITYQUESTION":
+						println(r.getSecurityAnswer());
+						break;
+					case "SYSTEM":
+						println(r.getSystem());
+						break;
+					case "ROLES":
+						println(Role.listRoles());
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+		}
 		
+		//end of day 6
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your sixth day. Well done!", textSpeed);
+		in.nextLine();
 		
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+	
+		if(gameScore >0){
+			print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
+			in.nextLine();
+		}else{
+			print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+			in.nextLine();
+		}
+		
+		//in.close();
+		return 1;	
+	}	
 		
 		
 		

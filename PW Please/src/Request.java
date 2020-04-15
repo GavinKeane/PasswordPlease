@@ -138,6 +138,7 @@ public class Request {
 						this.failureText = "Security answer was incorrect.";
 					}
 				}
+				this.securityAnswer = "QUESTION: " + e.getSecurityQuestion() + "\nANSWER: " + this.securityAnswer;
 			break;
 			case(6):
 				this.password = e.getPassword();
@@ -169,6 +170,7 @@ public class Request {
 						this.failureText = "Employee requested access to a restricted system.";
 					}
 				}
+				this.securityAnswer = "QUESTION: " + e.getSecurityQuestion() + "\nANSWER: " + this.securityAnswer;
 			break;
 		}
 		

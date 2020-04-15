@@ -20,8 +20,8 @@ public class PasswordPlease {
 		//play day 2
 		//Game.day2();
 		//play day3
-		//Game.day3();
-	
+		Game.day3();
+		//Game.day6();
 		/*
 		printListOfEmployees(6);
 		for(int i = 0; i < 10; i++){
@@ -29,7 +29,7 @@ public class PasswordPlease {
 			System.out.println(r.getUsername() + " " + r.getPassword() + " " + r.getSystem() + " " + r.getFace() + " " + r.getHasFactor() + " " + r.getSecurityAnswer() + " " + r.getFailureText());	
 		}
 		*/
-		Game.demo();
+		//Game.demo();
 	}
 
 	public static void printListOfEmployees(int day) {
