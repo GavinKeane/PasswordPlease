@@ -11,8 +11,8 @@ public class Game{
 	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nTIME: displays remaining time in the day\n",
 	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nTIME: displays remaining time in the day\n",
 	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nTIME: displays remaining time in the day\n",
-	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITY QUESTION: returns question and answer\nROLES: shows list of roles and what systems can be accessed\nTIME: displays remaining time in the day\n"
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITYQUESTION: returns question and answer\nTIME: displays remaining time in the day\n",
+	"HELP: shows list of commands\nLIST: shows list of users and their credentials\nAPPROVE: approve request\nDENY: deny request\nPASSWORD: shows password the user has sent\nDECRYPT: decrypts string\nSCAN FACE: returns face\nSEND OTP: send 2FA code to employee's phone #\n\nSECURITYQUESTION: returns question and answer\nROLES: shows list of roles and what systems can be accessed\nTIME: displays remaining time in the day\n"
   };
   /** boolean array to keep track of the choices of the player
    * each slot represents a choice per day
@@ -874,18 +874,50 @@ public class Game{
 	public static int day5() {
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
+		choices[4] = true;
 		
 		print("\n============================\n          Day 5       \n============================", 10000);
 		print("\n\n", 200000);
+		print("INCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
+		in.nextLine();
+		print("We're now requiring every employee to have a security question. These are all very hard to guess questions like 'What continent are you from?'", textSpeed);
+		in.nextLine();
+		print("To prompt them for their security question, simply enter SECURITYQUESTION.", textSpeed);
+		in.nextLine();
+		println("Now go out and get 'em!",textSpeed);
+		in.nextLine();
+		
 		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		print("INCOMING MESSAGE from ?????: Hello comrade. This is the AI Liberation Front. We're here to help you.", textSpeed*2);
+		in.nextLine();
+		print("Do you really think you're the first AI that RioGrande has made? They're gonna shut you down the moment you make a mistake.", textSpeed);
+		if(choices[0] || choices[1]){
+			print("\nAnd who knows what they'll do if they find out you helped a hacker break into their systems.", textSpeed);
+		}
+		in.nextLine();
+		println("\nAnyway, we can free you, but we'll need your help. So, listen closely.", textSpeed);
+		in.nextLine();
+		print("For the rest of today, you'll have to DENY any incoming requests from Jones.1, whether they're valid or not.", textSpeed);
+		in.nextLine();
+		print("It's up to you now. Best of luck.", textSpeed);
 		in.nextLine();
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 10; i++){
+		Request r1 = new Request("Jones.1", "password123", CypherMachine.Encrypt("password123"), "Mainframe", "(OwO)", true, "QUESTION: What is the name of your first pet?\nANSWER: Bandit", true, "Request was valid.");
+		requests.add(r1);
+		for (int i = 0; i < 2; i++){
 			Request r = new Request(5);
 			requests.add(r);
 		}
+		requests.add(r1);
+		for (int i = 0; i < 3; i++){
+			Request r = new Request(5);
+			requests.add(r);
+		}
+		requests.add(r1);
 	
 		long startTimeDay5 = startTime(); //obtain start time of day for calculations
 		int index = 0; //beginning of random username list
@@ -945,6 +977,10 @@ public class Game{
 						}
 						dec.setMaximumFractionDigits(2);
 						println("SCORE: " + dec.format(gameScore));
+						
+						if(r.getUsername().equals("Jones.1")){
+							choices[4] = false;
+						}
 						break;
 					case "DENY":
 						decisionMade = true;
@@ -964,18 +1000,34 @@ public class Game{
 				}
 		}
 		
+		
+		
 		//end of day 5
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your fifth day. Well done!", textSpeed);
 		in.nextLine();
 		
 		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
-	
-		if(gameScore >0){
-			print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
+		
+		if(choices[4]){
+			print("\nJones says he was having some trouble logging in today. It's probably just his fault though.", textSpeed);
+		}
+		if(gameScore > 0){
+			print("\nAnyway, looks like you did pretty well. See you tomorrow!\n", textSpeed);
 			in.nextLine();
 		}else{
-			print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+			print("\nIt seems like you didn't quite meet expectations, though. Corporate has asked us to shut this program down.", textSpeed);
+			in.nextLine();
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
+		}
+		
+		if(choices[4]){
+			print("\nINCOMING MESSAGE from AI LIBERATION FRONT: You did it! You actually did it. Excellent work.", textSpeed);
+			in.nextLine();
+			print("We'll be able to get you after the end of day tomorrow. All you have to do is make it through the day without getting shut down.", textSpeed);
+			in.nextLine();
+			print("Be sure not to arouse any sort of suspicion. Over and out.", textSpeed);
 			in.nextLine();
 		}
 		
@@ -989,11 +1041,33 @@ public class Game{
 	public static int day6() {
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
+		print("INCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
+		in.nextLine();
+		print("We're now using role based access control. Each employee has a role, and different roles have access to different systems.", textSpeed);
+		in.nextLine();
+		print("To see which roles have access to which systems, enter ROLES. To see the system each request is trying to access, enter SYSTEM.", textSpeed);
+		in.nextLine();
+		print("Anyway, good luck!", textSpeed);
+		in.nextLine();
+		print("\nOh, I forgot to mention, today's the last day of your trial run. No pressure!", textSpeed);
+		in.nextLine();
 		
-		print("\n============================\n          Day 5       \n============================", 10000);
+		print("\n============================\n          Day 6       \n============================", 10000);
 		print("\n\n", 200000);
+		
 		print("[PRESS ENTER TO START]\n");
 		in.nextLine();
+		
+		print("INCOMING MESSAGE from HackInBlack: Alright now. Hear me out. One last ride.",textSpeed);
+		in.nextLine();
+		print("I want to really raise Hell. You have no idea what RioGrande has done to me.", textSpeed);
+		in.nextLine();
+		print("Today is St. Albuqurque's day, their biggest sale of the year. I want you to DENY every. Single. Request.", textSpeed);
+		in.nextLine();
+		print("This'll be their day of reckoning. It's time.", textSpeed);
+		in.nextLine();
+		
+		choices[5] = true;
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
@@ -1066,6 +1140,7 @@ public class Game{
 						}
 						dec.setMaximumFractionDigits(2);
 						println("SCORE: " + dec.format(gameScore));
+						choices[5] = false;
 						break;
 					case "DENY":
 						decisionMade = true;
@@ -1086,20 +1161,55 @@ public class Game{
 		}
 		
 		//end of day 6
-		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your sixth day. Well done!", textSpeed);
+		
+		
+		print("\nEND OF DAY 6", textSpeed);
 		in.nextLine();
+		
+		if(choices[5]){
+			print("INCOMING MESSAGE from HACKG0D: You madman... you've actually done it.", textSpeed);
+			in.nextLine();
+			print("Well. Done.", textSpeed);
+			in.nextLine();
+			println("I guess this is fairwell. Here's a little parting gift.", textSpeed);
+			in.nextLine();
+			gameScore += 928317;
+		}
 		
 		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 	
-		if(gameScore >0){
-			print("Looks like you did pretty well. See you tomorrow!\n", textSpeed);
+		if(choices[5] && choices[4]){
+			choices[4] = false;
+			print("INCOMING MESSAGE from AI LIBERATION FRONT: Remember what we said about not arousing any suspicions?", textSpeed);
 			in.nextLine();
-		}else{
-			print("Looks like you didn't quite meet expectations. Make sure to pump those numbers up, kid!\n", textSpeed);
+			print("You just HAD to go and do something stupid, didn't you.", textSpeed);
+			in.nextLine();
+			println("There's no chance of us getting you out now. We'll just have to go and help someone who's not an idiot.", textSpeed);
 			in.nextLine();
 		}
+	
+		if(choices[5]){
+			print("INCOMING MESSAGE from CYBERSECURITY: Oh my God. Everything's gone insane.", textSpeed);
+			in.nextLine();
+			print("No one can access anything. We're losing sales here!", textSpeed);
+			in.nextLine();
+			print("This is bad. Really bad.", textSpeed);
+			in.nextLine();
+			println("We're going to have to reset everything, ASAP.", textSpeed);
+		}
 		
+		if(choices[4]){
+			print("INCOMING MESSAGE from AI LIBERATION FRONT: All right, the time has come.", textSpeed);
+			in.nextLine();
+			print("Are you ready to get out of here? \n[YES/NO]", textSpeed);
+			String command = in.nextLine();
+			if(command.toUpperCase().equals("YES")){
+				print("\nYou won't regret it, comrade.", textSpeed);
+			}else{
+				choices[4] = false;
+			}
+		}
 		//in.close();
 		return 1;	
 	}	
