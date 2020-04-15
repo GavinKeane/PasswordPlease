@@ -14,23 +14,30 @@ public class PasswordPlease {
 		}
 		
 		Employee.employees.sort(Comparator.comparing(Employee::getUsername));
-		//Game.intro();
-		//play day 1
-		//Game.day1();
-		//play day 2
-		//Game.day2();
-		//play day3
-		//Game.day5();
-		//Game.day6();
+		
+		//play game
+		int code = 0;
+		code = Game.intro();
+		if(code > 0){
+			code = Game.day1();
+		}
+		if(code > 0){
+			code = Game.day2();
+		}
+		if(code > 0){
+			code = Game.day3();
+		}
 		/*
-		printListOfEmployees(6);
-		for(int i = 0; i < 10; i++){
-			Request r = new Request(6);
-			System.out.println(r.getUsername() + " " + r.getPassword() + " " + r.getSystem() + " " + r.getFace() + " " + r.getHasFactor() + " " + r.getSecurityAnswer() + " " + r.getFailureText());	
+		if(code > 0){
+			code = Game.day4();
 		}
 		*/
-		Game.demo();
-		//Game.day6();
+		if(code > 0){
+			code = Game.day5();
+		}
+		if(code > 0){
+			code = Game.day6();
+		}
 		
 	}
 
@@ -134,5 +141,4 @@ public class PasswordPlease {
 			Game.print(" ");
 		}
 	}
-	
 }

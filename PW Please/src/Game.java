@@ -165,7 +165,7 @@ public class Game{
 	
 	  }
 	
-	public static void intro(){
+	public static int intro(){
 		boolean choseDemo = false;
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
@@ -251,7 +251,9 @@ public class Game{
 		
 		if(choseDemo){
 			demo();
+			return -1;
 		}
+		return 1;
 	}
 	
 	//Play day 1
@@ -1522,7 +1524,7 @@ public class Game{
 		
 		//shortened day 3/4
 		//generate requests for day
-		new ArrayList<Request>();
+		requests = new ArrayList<Request>();
 		Request r1 = new Request("Jones.1", "password123", CypherMachine.Encrypt("password123"), "Mainframe", "(OwO)", true, "QUESTION: What is the name of your first pet?\nANSWER: Bandit", true, "Request was valid.");
 		requests.add(r1);
 		for (int i = 0; i < 1; i++){
