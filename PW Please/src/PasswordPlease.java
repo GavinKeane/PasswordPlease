@@ -29,11 +29,9 @@ public class PasswordPlease {
 			System.out.println(r.getUsername() + " " + r.getPassword() + " " + r.getSystem() + " " + r.getFace() + " " + r.getHasFactor() + " " + r.getSecurityAnswer() + " " + r.getFailureText());	
 		}
 		*/
-		//Game.demo();
+		Game.demo();
 		//Game.day6();
-		Ending.companyEnding1();
-		Ending.companyEnding2();
-		Ending.companyEnding3();
+		
 	}
 
 	public static void printListOfEmployees(int day) {
