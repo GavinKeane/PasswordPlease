@@ -20,8 +20,7 @@ public class PasswordPlease {
 		//play day 2
 		//Game.day2();
 		//play day3
-		Game.day5();
-		Game.day6();
+		//Game.day5();
 		//Game.day6();
 		/*
 		printListOfEmployees(6);
@@ -31,6 +30,10 @@ public class PasswordPlease {
 		}
 		*/
 		//Game.demo();
+		//Game.day6();
+		Ending.companyEnding1();
+		Ending.companyEnding2();
+		Ending.companyEnding3();
 	}
 
 	public static void printListOfEmployees(int day) {

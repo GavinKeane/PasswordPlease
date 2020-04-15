@@ -1171,12 +1171,12 @@ public class Game{
 			in.nextLine();
 			print("Well. Done.", textSpeed);
 			in.nextLine();
-			println("I guess this is fairwell. Here's a little parting gift.", textSpeed);
+			print("I guess this is farewell. Here's a little parting gift.", textSpeed);
 			in.nextLine();
 			gameScore += 928317;
 		}
 		
-		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		println("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 	
 		if(choices[5] && choices[4]){
@@ -1207,6 +1207,7 @@ public class Game{
 			if(command.toUpperCase().equals("YES")){
 				print("\nYou won't regret it, comrade.", textSpeed);
 			}else{
+				print("\nFine. That's your choice. Good luck out there.", textSpeed);
 				choices[4] = false;
 			}
 		}
