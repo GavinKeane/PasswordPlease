@@ -103,7 +103,7 @@ public class Request {
 					}else if(rand < 5){
 						this.face = e.getFace(1);
 						this.failureText = "Face was incorrect.";
-					}else if(rand < 7){
+					}else if(rand < 6){
 						this.face = e.getFace(2);
 						this.failureText = "Face was incorrect.";
 					}else{
@@ -219,7 +219,6 @@ public class Request {
 	public String getFailureText() {
 		return this.failureText;
 	}
-
 	/*
 	 * Setter methods
 	 */
