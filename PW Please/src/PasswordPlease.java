@@ -27,11 +27,9 @@ public class PasswordPlease {
 		if(code > 0){
 			code = Game.day3();
 		}
-		/*
 		if(code > 0){
 			code = Game.day4();
 		}
-		*/
 		if(code > 0){
 			code = Game.day5();
 		}

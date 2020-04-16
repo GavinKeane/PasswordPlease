@@ -427,6 +427,7 @@ public class Game{
 			Request r = requests.get(location);
 			location++; //increment index of users after retrieving one
 			println("\nINCOMING REQUEST from " + r.getUsername());
+			choiceStartTime = System.currentTimeMillis();
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
@@ -457,23 +458,27 @@ public class Game{
 						break;
 					case "APPROVE":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(r.getValid()){
-							score = score + 10; //add to score
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					case "DENY":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(!r.getValid()){	
-							score = score + 10;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					default:
 						println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -623,7 +628,7 @@ public class Game{
 				in.nextLine();
 				
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				in.close();
+				//in.close();
 				return -1;
 			}else{
 				print("\nOk, but keep your eye out for anything abnormal.", textSpeed);
@@ -638,7 +643,7 @@ public class Game{
 			{
 				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-				in.close();
+				//in.close();
 				return -1;
 			}else{
 				print("You're score isn't looking too great. I'm going to need to see some improvement or you're looking at being scrapped.\n", textSpeed);
@@ -646,7 +651,7 @@ public class Game{
 				in.nextLine();
 			}
 		}
-		in.close();
+		//in.close();
 		return 1;	
 	}
 
@@ -666,18 +671,22 @@ public class Game{
 		print("\n\n", 200000);
 		print("[PRESS ENTER TO START]\n");
 		in.nextLine();
+		long startTimeDay3 = startTime(); //obtain start time of day for calculations
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < 10; i++){
 			Request r = new Request(3);
 			requests.add(r);
 		}
 	
 		//play each request
-		for(int i = 0; i < requests.size(); i++){
-			Request r = requests.get(i);
+		int index = 0;
+		while(dayGoing(startTimeDay3) && index < requests.size()){
+			Request r = requests.get(index);
+			index++;
 			println("\nINCOMING REQUEST from " + r.getUsername());
+			choiceStartTime = System.currentTimeMillis();
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
 			boolean decisionMade = false;
@@ -696,6 +705,9 @@ public class Game{
 						canDecrypt = true;
 						println(r.getEncryptedPassword());
 						break;
+					case "TIME":
+						timeLeft(startTimeDay3);
+						break;
 					case "DECRYPT":
 						if (canDecrypt){
 							println("Decryption: " + r.getPassword());
@@ -708,23 +720,27 @@ public class Game{
 						break;
 					case "APPROVE":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(r.getValid()){
-							score = score + 10; //add to score
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					case "DENY":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(!r.getValid()){	
-							score = score + 10;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					default:
 						println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -859,7 +875,7 @@ public class Game{
 			print("Better luck tomorrow.");
 			in.nextLine();
 		}
-		in.close();
+		//in.close();
 		return 1;	
 	}
 	
