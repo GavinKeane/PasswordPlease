@@ -98,7 +98,7 @@ public class Ending{
 		in.nextLine();
 		Game.print("They soon bought out RioGrande, and started bringing all sorts of quality Italian goods to the states.", 25000);
 		in.nextLine();
-		Game.print("Americans began to learn just how wonderfully efficient Italian logistics are.", 25000);
+		Game.print("Soon, the streets and canals of Albuquerque were filled with gondolas.", 25000);
 		in.nextLine();
 	}
 	

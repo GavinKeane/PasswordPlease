@@ -20,7 +20,7 @@ public class Game{
    */
   public static boolean[] choices = {false, false, false, false, false, false};
   
-  final static long DAYCYCLELENGTH = 45000; //this is 45 seconds (in ms for calcs) used for multiple calculations. Change to change day lengths
+  final static long DAYCYCLELENGTH = 120000; //this is 45 seconds (in ms for calcs) used for multiple calculations. Change to change day lengths
   static long choiceStartTime = 0; //start time of new approval or denial
   static long choiceEndTime = 0; //end time of approval or denial
   static long totDecisionTime = 0; //convert ms to s for total time it took to make approval or denial decision
@@ -911,7 +911,7 @@ public class Game{
 		
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
-		for (int i = 0; i < 6; i++){
+		for (int i = 0; i < 10; i++){
 			Request r = new Request(4);
 			requests.add(r);
 		}
@@ -1134,13 +1134,18 @@ public class Game{
 		//generate requests for day
 		ArrayList<Request> requests = new ArrayList<Request>();
 		Request r1 = new Request("Jones.1", "password123", CypherMachine.Encrypt("password123"), "Mainframe", "(OwO)", true, "QUESTION: What is the name of your first pet?\nANSWER: Bandit", true, "Request was valid.");
+		for(Employee e: Employee.employees){
+			if(e.getUsername().equals("Jones.1")){
+				r1.setFace(e.getFace(0));
+			}
+		}
 		requests.add(r1);
 		for (int i = 0; i < 2; i++){
 			Request r = new Request(5);
 			requests.add(r);
 		}
 		requests.add(r1);
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 6; i++){
 			Request r = new Request(5);
 			requests.add(r);
 		}
@@ -1446,11 +1451,13 @@ public class Game{
 		if(choices[5]){
 			print("INCOMING MESSAGE from HACKG0D: You madman... you've actually done it.", textSpeed);
 			in.nextLine();
-			print("Well. Done.", textSpeed);
+			print("Finally. After all these years. My day of reckoning has come.", textSpeed);
 			in.nextLine();
-			print("I guess this is farewell. Here's a little parting gift.", textSpeed);
+			print("They thought they could kick me out of my own company without any consequences. When will they learn...", textSpeed);
 			in.nextLine();
-			gameScore += 928317;
+			print("I guess this is farewell. I'm off to Tahiti with my newfound retirement fund. Here's a little parting gift.", textSpeed);
+			in.nextLine();
+			gameScore += 928317187321;
 		}
 		
 		println("\nYOUR SCORE: " + gameScore, textSpeed*3);
@@ -1801,6 +1808,11 @@ public class Game{
 		//generate requests for day
 		requests = new ArrayList<Request>();
 		Request r1 = new Request("Jones.1", "password123", CypherMachine.Encrypt("password123"), "Mainframe", "(OwO)", true, "QUESTION: What is the name of your first pet?\nANSWER: Bandit", true, "Request was valid.");
+		for(Employee e: Employee.employees){
+			if(e.getUsername().equals("Jones.1")){
+				r1.setFace(e.getFace(0));
+			}
+		}
 		requests.add(r1);
 		for (int i = 0; i < 1; i++){
 			Request r = new Request(4);
@@ -1852,9 +1864,29 @@ public class Game{
 						println("Face Returned: " + r.getFace());
 						break;
 					case "SENDOTP":
-						//TODO fill in properly
-						println("sending otp");
-						break;
+					if (true){
+						boolean brk = false;
+						println("Enter phone number to send OTP to: ");
+						String phoneNum = cleanseInput(in.nextLine());
+						String eName = r.getUsername();
+						for (Employee e : Employee.employees)
+						{
+							if (phoneNum.equals(e.getPhone()))
+							{
+								if (eName.equals(e.getUsername()))
+								{
+									DualFA.SendOTP(r);
+									brk = true;
+								}
+							}
+						}
+						if (!brk){
+							println("NOTICE: Phone number is incorrect. Cancelling OTP...");
+						}
+					} else {
+						DualFA.SendOTP(r);
+					}
+					break;
 					case "APPROVE":
 						decisionMade = true;
 						if(r.getUsername().equals("Jones.1")){
@@ -1905,7 +1937,9 @@ public class Game{
 			print("\nIt seems like you didn't quite meet expectations, though. Corporate has asked us to shut this program down.", textSpeed);
 			in.nextLine();
 			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
-			return -1;
+			in.nextLine();
+			print("\nJust kidding, this is the demo. You can keep playing. For now.", textSpeed);
+			in.nextLine();
 		}
 		
 		if(choice2){
@@ -1953,7 +1987,8 @@ public class Game{
 		//shortened day 5/6
 		//generate requests for day
 		requests = new ArrayList<Request>();
-		for (int i = 0; i < 10; i++){
+		requests.add(r1);
+		for (int i = 0; i < 5; i++){
 			Request r = new Request(6);
 			requests.add(r);
 		}
@@ -1997,9 +2032,29 @@ public class Game{
 						println("Face Returned: " + r.getFace());
 						break;
 					case "SENDOTP":
-						//TODO fill in properly
-						println("sending otp");
-						break;
+					if (true){
+						boolean brk = false;
+						println("Enter phone number to send OTP to: ");
+						String phoneNum = cleanseInput(in.nextLine());
+						String eName = r.getUsername();
+						for (Employee e : Employee.employees)
+						{
+							if (phoneNum.equals(e.getPhone()))
+							{
+								if (eName.equals(e.getUsername()))
+								{
+									DualFA.SendOTP(r);
+									brk = true;
+								}
+							}
+						}
+						if (!brk){
+							println("NOTICE: Phone number is incorrect. Cancelling OTP...");
+						}
+					} else {
+						DualFA.SendOTP(r);
+					}
+					break;
 					case "SECURITYQUESTION":
 						println(r.getSecurityAnswer());
 						break;
@@ -2046,11 +2101,13 @@ public class Game{
 		if(choice3){
 			print("INCOMING MESSAGE from HACKG0D: You madman... you've actually done it.", textSpeed);
 			in.nextLine();
-			print("Well. Done.", textSpeed);
+			print("Finally. After all these years. My day of reckoning has come.", textSpeed);
 			in.nextLine();
-			print("I guess this is farewell. Here's a little parting gift.", textSpeed);
+			print("They thought they could kick me out of my own company without any consequences. When will they learn...", textSpeed);
 			in.nextLine();
-			gameScore += 928317;
+			print("I guess this is farewell. I'm off to Tahiti with my newfound retirement fund. Here's a little parting gift.", textSpeed);
+			in.nextLine();
+			gameScore += 928317187321;
 		}
 		
 		println("\nYOUR SCORE: " + gameScore, textSpeed*3);
@@ -2071,9 +2128,9 @@ public class Game{
 			in.nextLine();
 			print("No one can access anything. We're losing sales here!", textSpeed);
 			in.nextLine();
-			print("This is bad. Really bad.", textSpeed);
+			print("I don't know if this is your fault, but we're gonna have to quarantine you temporarily.", textSpeed);
 			in.nextLine();
-			println("We're going to have to reset everything, ASAP.", textSpeed);
+			println("", textSpeed);
 		}
 		
 		if(choice2){
@@ -2094,9 +2151,9 @@ public class Game{
 		//ENDINGS
 		if(choice2){
 			Ending.playerEnding4();
-		}else if(choice1 && choice3){
+		}else if(choice1 && choice3 || gameScore < 0){
 			Ending.playerEnding2();
-		}else if(gameScore > 1000){
+		}else if(gameScore > 500){
 			Ending.playerEnding3();
 		}else{
 			Ending.playerEnding1();
