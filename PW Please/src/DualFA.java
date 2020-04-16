@@ -20,12 +20,12 @@ public class DualFA{
         {
             otp += numbers.charAt(r.nextInt(numbers.length()));
         }
-        Game.println("OTP Generated: " + otp);
         return otp;
     }
     public static void SendOTP(Request r)
     {
         String otp = GenerateOTP();
+        Game.println("OTP Generated: " + otp);
         Game.println("Sending OTP...");
         Game.println("Waiting on response...");
         if (r.getHasFactor()){

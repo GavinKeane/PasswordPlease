@@ -36,7 +36,6 @@ public class PasswordPlease {
 		if(code > 0){
 			code = Game.day6();
 		}
-		
 	}
 
 	public static void printListOfEmployees(int day) {

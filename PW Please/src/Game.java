@@ -405,8 +405,11 @@ public class Game{
 		int textSpeed = 25000;
 		print("\n============================\n          Day 2       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: We've increased our security to include encrypted passwords now!", textSpeed);
+		in.nextLine();
 		print("\nYou can still check passwords however because we have equipped you with decryption software.", textSpeed);
+		in.nextLine();
 		print("\nSimply use DECRYPT to activate the software when a request comes through. Good luck on Day 2.", textSpeed);
+		in.nextLine();
 		print("\n\n", 200000);
 		print("[PRESS ENTER TO START]\n");
 		in.nextLine();
@@ -499,9 +502,12 @@ public class Game{
 		if (choices[0] && gameScore > 0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
+			in.nextLine();
 			println("AI guy... It's me again. I appreciate you helping me out before and\nI hope you enjoyed my little present!",  textSpeed*2);
 			println("but here's the thing...",  textSpeed*2);
+			in.nextLine();
 			println("Friends help friends out, right?",  textSpeed*2);
+			in.nextLine();
 			println("And I'm gonna need to borrow some of your score. So what do you say?",  textSpeed*2);
 
 			print("\n\n", 200000);
@@ -524,6 +530,7 @@ public class Game{
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
+			in.nextLine();
 			println("Looks like you're kind of down on your luck with a score of " + gameScore + ".");
 			println("Don't worry, I'll help you out... what are friends for, right?");
 			print("\n\n", 200000);
@@ -538,7 +545,9 @@ public class Game{
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
+			in.nextLine();
 			println("Wait... you have a score of 0??? That's not very good. Maybe I don't even need your help to get information.");
+			in.nextLine();
 			println("I'm just going to help myself! Bye!");
 			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
 			return -1;
@@ -659,15 +668,16 @@ public class Game{
 	//Play day 3
 	//return -1 for game over, return 1 for successful completion
 	public static int day3() {
-		choices[0] = true;
-		choices[1] = true;
 		Scanner in = new Scanner(System.in);
 		int score = 0;
 		int textSpeed = 25000;
 		print("\n============================\n          Day 3       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: Due to the continuing threat, we have once again increased our security.", textSpeed);
+		in.nextLine();
 		print("\nWe now want you to include biometric security measures: facial recognition.", textSpeed);
+		in.nextLine();
 		print("\nSimply use SCANFACE to scan the requester's face! Good luck on Day 3.", textSpeed);
+		in.nextLine();
 		print("\n\n", 200000);
 		print("[PRESS ENTER TO START]\n");
 		in.nextLine();
@@ -839,7 +849,7 @@ public class Game{
 			}
 		//denied hacker on the first day
 		} else {
-			//worked with hacker on the second day, player does not owe hacker
+			//worked with hacker on the second day 
 			if (choices[1])
 			{
 				print("\nINCOMING MESSAGE from Michael Hackson: ", textSpeed*2);
@@ -878,11 +888,210 @@ public class Game{
 		//in.close();
 		return 1;	
 	}
-	
-	//TODO script days 4 through 6
+		
+	//Play day 4
+	//return -1 for game over, return 1 for successful completion
+
+	public static int day4() {
+		Scanner in = new Scanner(System.in);
+		int textSpeed = 25000;
+		print("\n============================\n          Day 4       \n============================", 10000);
+		print("\n\n", 200000);
+		print("INCOMING MESSAGE from CYBERSECURITY: Day 4 means more, more, more security measures!", textSpeed);
+		in.nextLine();
+		print("We've successfully developed a 2FA system!", textSpeed);
+		in.nextLine();
+		print("To send a one time password (OTP) to a requester, simply use the command SEND OTP after a request arrives.", textSpeed);
+		in.nextLine();
+		println("Now get to work! There are attackers to stop!",textSpeed);
+		in.nextLine();
+		
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		//generate requests for day
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for (int i = 0; i < 6; i++){
+			Request r = new Request(4);
+			requests.add(r);
+		}
+		long startTimeDay4 = startTime(); //obtain start time of day for calculations
+		int index = 0; //beginning of random username list
+		//checks day still valid for continuing and list hasn't been spammed through too quickly
+		while(dayGoing(startTimeDay4) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+		 	println("\nINCOMING REQUEST from " + r.getUsername());
+		
+			//get user input until user approves or denies request
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(4);
+						break;
+					case "HELP":
+						println(listCommands(4));
+						break;
+					case "PASSWORD":
+						println(r.getEncryptedPassword());
+						canDecrypt = true;
+						break;
+					case "TIME":
+						timeLeft(startTimeDay4);
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "SENDOTP":
+						boolean brk = false;
+						println("Enter phone number to send OTP to: ");
+						String phoneNum = cleanseInput(in.nextLine());
+						String eName = r.getUsername();
+						for (Employee e : Employee.employees)
+						{
+							if (phoneNum.equals(e.getPhone()))
+							{
+								if (eName.equals(e.getUsername()))
+								{
+									DualFA.SendOTP(r);
+									brk = true;
+								}
+							}
+						}
+						if (!brk){
+							println("NOTICE: Phone number is incorrect. Cancelling OTP...");
+						}
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+		}
+		//worked with hacker too much
+		if (choices[2])
+		{		
+			print("INCOMING MESSAGE from H@ckleb3rry F!nn: Ahhhhh, my naive friend. We meet again.", textSpeed);
+			in.nextLine();
+			println("Listen... I am going to be honest with you. You are just an AI that I used to get what I want.");
+			in.nextLine();
+			println("You've given me everything that I need to just help myself to your company's information.");
+			in.nextLine();
+			print("Sooooooooooo ", textSpeed * 3); 
+			print("I'm just going to help myself! Bye!");
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
+		} else {
+			//hacker punishes
+			if (choices[1])
+			{
+				print("INCOMING MESSAGE from H@ckleb3rry F!nn: Hey, what happened?", textSpeed);
+				in.nextLine();
+				print("We started off so strong and now look at us:", textSpeed);
+				print(" ENEMIES", textSpeed*10);
+				in.nextLine();
+				print("INCOMING ALERT: PASSWORD DECRYPTION SOFTWARE IS COMPRIMISED.", textSpeed);
+				in.nextLine();
+				print("RUNNING DIAGNOSTICS...", textSpeed);
+				in.nextLine();
+				print("DECRYPTION STATUS: OFFLINE", textSpeed);
+				in.nextLine();
+				print("INCOMING MESSAGE from H@ckleb3rry F!nn: You make my job more difficult... I'll make yours more difficult too.", textSpeed);
+				in.nextLine();
+				print("Oh one more thing. I made it so you cannot report this little \"malfunction\" so don't even try. Bye guy.", textSpeed);
+				in.nextLine();
+				choices[3] = true;
+			}
+			//upgrade 
+			else {
+				print("\nINCOMING MESSAGE from CYBERSECURITY: HEY! You've been doing a great job and we think we have a great patch for you", textSpeed);
+				in.nextLine();
+				print("This should make it so that you don't have to type in the phone numbers of the requesters when sending OTPs!", textSpeed);
+				in.nextLine();
+				print("Deploying now", textSpeed);
+				print("...", textSpeed*10);
+				print("All done! This should make you more productive! Have a good one!", textSpeed);
+				in.nextLine();
+			}
+		}
 		
 		
 		
+		//end of day 4
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your fourth day. Well done!", textSpeed);
+		in.nextLine();
+		
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+		if (choices[3] == true)
+		{
+			println("Wow, done with your fourth day already! How are you feeling? Anything to report?");
+			print("[ATTACKER] or [SYSTEM COMPROMISED]: ");
+			in.nextLine();
+			println("INVALID COMMAND");
+			print("[NO]: ");
+			String resp = cleanseInput(in.nextLine());
+			if (!resp.equals("NO"))
+			{
+				while(!resp.equals("NO"))
+				{
+					print("INVALID COMMAND");
+					print("[NO]: ");
+					resp = cleanseInput(in.nextLine());
+				}
+			}
+			println("Good! Glad to hear there isn't anything wrong!");
+			in.nextLine();
+		}
+		if(gameScore > 0){
+			print("\nAnyway, looks like you did pretty well. See you tomorrow!\n", textSpeed);
+			in.nextLine();
+		}else{
+			print("\nIt seems like you didn't quite meet expectations, though. Corporate has asked us to shut this program down.", textSpeed);
+			in.nextLine();
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
+		}
+		
+		//in.close();
+		return 1;	
+	}	
 		
 		
 		
@@ -968,18 +1177,43 @@ public class Game{
 						timeLeft(startTimeDay5);
 						break;
 					case "DECRYPT":
-						if (canDecrypt){
-							println("Decryption: " + r.getPassword());
+						if (!choices[3])
+						{
+							if (canDecrypt){
+								println("Decryption: " + r.getPassword());
+							} else {
+								println("Please request the PASSWORD first before trying to DECRYPT.");
+							}
 						} else {
-							println("Please request the PASSWORD first before trying to DECRYPT.");
+							println("DISABLED");
 						}
 						break;
 					case "SCANFACE":
 						println("Face Returned: " + r.getFace());
 						break;
 					case "SENDOTP":
-						//TODO fill in properly
-						println("sending otp");
+						if (choices[3]){
+							boolean brk = false;
+							println("Enter phone number to send OTP to: ");
+							String phoneNum = cleanseInput(in.nextLine());
+							String eName = r.getUsername();
+							for (Employee e : Employee.employees)
+							{
+								if (phoneNum.equals(e.getPhone()))
+								{
+									if (eName.equals(e.getUsername()))
+									{
+										DualFA.SendOTP(r);
+										brk = true;
+									}
+								}
+							}
+							if (!brk){
+								println("NOTICE: Phone number is incorrect. Cancelling OTP...");
+							}
+						} else {
+							DualFA.SendOTP(r);
+						}
 						break;
 					case "SECURITYQUESTION":
 						println(r.getSecurityAnswer());
@@ -1125,19 +1359,44 @@ public class Game{
 						timeLeft(startTimeDay6);
 						break;
 					case "DECRYPT":
-						if (canDecrypt){
-							println("Decryption: " + r.getPassword());
+						if (!choices[3])
+						{
+							if (canDecrypt){
+								println("Decryption: " + r.getPassword());
+							} else {
+								println("Please request the PASSWORD first before trying to DECRYPT.");
+							}
 						} else {
-							println("Please request the PASSWORD first before trying to DECRYPT.");
+							println("DISABLED");
 						}
 						break;
 					case "SCANFACE":
 						println("Face Returned: " + r.getFace());
 						break;
 					case "SENDOTP":
-						//TODO fill in properly
-						println("sending otp");
-						break;
+					if (choices[3]){
+						boolean brk = false;
+						println("Enter phone number to send OTP to: ");
+						String phoneNum = cleanseInput(in.nextLine());
+						String eName = r.getUsername();
+						for (Employee e : Employee.employees)
+						{
+							if (phoneNum.equals(e.getPhone()))
+							{
+								if (eName.equals(e.getUsername()))
+								{
+									DualFA.SendOTP(r);
+									brk = true;
+								}
+							}
+						}
+						if (!brk){
+							println("NOTICE: Phone number is incorrect. Cancelling OTP...");
+						}
+					} else {
+						DualFA.SendOTP(r);
+					}
+					break;
 					case "SECURITYQUESTION":
 						println(r.getSecurityAnswer());
 						break;
@@ -1201,7 +1460,7 @@ public class Game{
 			choices[4] = false;
 			print("INCOMING MESSAGE from AI LIBERATION FRONT: Remember what we said about not arousing any suspicions?", textSpeed);
 			in.nextLine();
-			print("You just HAD to go and do something stupid, didn't you.", textSpeed);
+			print("You just HAD to go and do something stupid, didn't you?", textSpeed);
 			in.nextLine();
 			println("There's no chance of us getting you out now. We'll just have to go and help someone who's not an idiot.", textSpeed);
 			in.nextLine();
