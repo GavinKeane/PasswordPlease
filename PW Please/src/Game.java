@@ -883,7 +883,6 @@ public class Game{
 	public static int day4() {
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
-		choices[1] = true;
 		print("\n============================\n          Day 4       \n============================", 10000);
 		print("\n\n", 200000);
 		print("INCOMING MESSAGE from CYBERSECURITY: Day 4 means more, more, more security measures!", textSpeed);
@@ -1166,10 +1165,15 @@ public class Game{
 						timeLeft(startTimeDay5);
 						break;
 					case "DECRYPT":
-						if (canDecrypt){
-							println("Decryption: " + r.getPassword());
+						if (!choices[3])
+						{
+							if (canDecrypt){
+								println("Decryption: " + r.getPassword());
+							} else {
+								println("Please request the PASSWORD first before trying to DECRYPT.");
+							}
 						} else {
-							println("Please request the PASSWORD first before trying to DECRYPT.");
+							println("DISABLED");
 						}
 						break;
 					case "SCANFACE":
@@ -1343,10 +1347,15 @@ public class Game{
 						timeLeft(startTimeDay6);
 						break;
 					case "DECRYPT":
-						if (canDecrypt){
-							println("Decryption: " + r.getPassword());
+						if (!choices[3])
+						{
+							if (canDecrypt){
+								println("Decryption: " + r.getPassword());
+							} else {
+								println("Please request the PASSWORD first before trying to DECRYPT.");
+							}
 						} else {
-							println("Please request the PASSWORD first before trying to DECRYPT.");
+							println("DISABLED");
 						}
 						break;
 					case "SCANFACE":
