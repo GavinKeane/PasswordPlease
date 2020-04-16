@@ -355,8 +355,8 @@ public class Game{
 		//end of day 1
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your first day. Well done!", textSpeed);
 		in.nextLine();
-		
-		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		dec.setMaximumFractionDigits(2);
+		print("\nYOUR SCORE: " + dec.format(gameScore), textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -378,8 +378,8 @@ public class Game{
 				print("\nWell, you're not programmed to lie, so I guess I'll have to believe you. Must have been a bug somewhere. I'll just reset your score for now.", textSpeed);
 				gameScore = 0;
 				in.nextLine();
-				
-				print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+				dec.setMaximumFractionDigits(2);
+				print("\nYOUR SCORE: " + dec.format(gameScore), textSpeed*3);
 				in.nextLine();
 				
 				print("\nThat should do it. I'll see you tomorrow!\n", textSpeed);
@@ -402,7 +402,6 @@ public class Game{
 	//return -1 for game over, return 1 for successful completion
 	public static int day2() {
 		Scanner in = new Scanner(System.in);
-		int score = 0;
 		int textSpeed = 25000;
 		print("\n============================\n          Day 2       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: We've increased our security to include encrypted passwords now!", textSpeed);
@@ -426,6 +425,7 @@ public class Game{
 		while(dayGoing(startTimeDay2) && location < requests.size()){
 			Request r = requests.get(location);
 			location++; //increment index of users after retrieving one
+			choiceStartTime = System.currentTimeMillis();
 			println("\nINCOMING REQUEST from " + r.getUsername());
 			choiceStartTime = System.currentTimeMillis();
 			//println("VALID: " + r.getValid());
@@ -496,7 +496,7 @@ public class Game{
 		 * if the hacker was denied in day 1,
 		 * 			he will ask again.
 		 */
-		if (choices[0] && score > 0)
+		if (choices[0] && gameScore > 0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and\nI hope you enjoyed my little present!",  textSpeed*2);
@@ -509,8 +509,8 @@ public class Game{
 			switch(cleanseInput(in.nextLine())){
 				case "APPROVE":
 					choices[1] = true;
-					println("\nNOTICE: Withdrawal made in the amount of: " + (score -1) + "\nYour balance has been deducted.\n", 25000);
-					score -= (score-1);
+					println("\nNOTICE: Withdrawal made in the amount of: " + (gameScore -1) + "\nYour balance has been deducted.\n", 25000);
+					gameScore -= (gameScore-1);
 					println("Listen, I'm sorry. I promise I'll give it back later.",  textSpeed*2);
 					println("Thanks, bye!");
 					break;
@@ -520,21 +520,21 @@ public class Game{
 					break;
 			}	
 		} 
-		else if (choices[0] && score < 0) 
+		else if (choices[0] && gameScore < 0) 
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
-			println("Looks like you're kind of down on your luck with a score of " + score + ".");
+			println("Looks like you're kind of down on your luck with a score of " + gameScore + ".");
 			println("Don't worry, I'll help you out... what are friends for, right?");
 			print("\n\n", 200000);
 			print("[PRESS ENTER TO ACCEPT HELP FROM YourOl'BuddyOl'Pal]\n");
 			in.nextLine();
-			score = 0;
+			gameScore = 0;
 			choices[1] = true;
 			println("\nNOTICE: Your score is now 0" + "\nYour balance has been reset.\n", 25000);
 			println("There you go. Clean start! Better luck tomorrow! Bye!");
 		}
-		else if (choices[0] && score ==0)
+		else if (choices[0] && gameScore ==0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
@@ -576,29 +576,29 @@ public class Game{
 						case "APPROVE":
 							decisionMade = true;
 							if(r.getValid()){
-								score = score + 10; //add to score
+								gameScore = gameScore + 10; //add to score
 							}else{
 								if(r.getUsername().equals("Hacker.1337")){
-								score = score + 120937128;
+								gameScore = gameScore + 120937128;
 								choices[1] = true;
 								println("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: " + r.getFailureText());
 								}else{
-									score -= 20;
+									gameScore -= 20;
 									println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 								}
 							}
-							println("SCORE: " + score);
+							println("SCORE: " + gameScore);
 							break;
 						case "DENY":
 							decisionMade = true;
 							if(!r.getValid()){	
-								score = score + 10;
+								gameScore = gameScore + 10;
 								println("Fine... I get it... AI in security is eFfECTiVe. Pfff, we'll see...",  textSpeed*2);
 							}else{
-								score = score - 20;
+								gameScore = gameScore - 20;
 								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 							}
-							println("SCORE: " + score);
+							println("SCORE: " + gameScore);
 							break;
 						default:
 							println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -611,7 +611,7 @@ public class Game{
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
 		in.nextLine();
 		
-		print("\nYOUR SCORE: " + score, textSpeed*3);
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -636,10 +636,10 @@ public class Game{
 				print("\nGood work today. I'll see you tomorrow!\n", textSpeed);
 			}
 		}else{
-			if(score > 10){
+			if(gameScore > 10){
 				print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
 				in.nextLine();
-			}else if(score < 0)
+			}else if(gameScore < 0)
 			{
 				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
