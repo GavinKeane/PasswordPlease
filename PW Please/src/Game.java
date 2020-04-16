@@ -596,18 +596,20 @@ public class Game{
 									println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 								}
 							}
-							println("SCORE: " + gameScore);
+							dec.setMaximumFractionDigits(2);
+							println("SCORE: " + dec.format(gameScore));
 							break;
 						case "DENY":
 							decisionMade = true;
+							choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 							if(!r.getValid()){	
-								gameScore = gameScore + 10;
-								println("Fine... I get it... AI in security is eFfECTiVe. Pfff, we'll see...",  textSpeed*2);
+								updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
 							}else{
-								gameScore = gameScore - 20;
+								updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 							}
-							println("SCORE: " + gameScore);
+							dec.setMaximumFractionDigits(2);
+							println("SCORE: " + dec.format(gameScore));
 							break;
 						default:
 							println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -619,8 +621,8 @@ public class Game{
 		//end of day 2
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
 		in.nextLine();
-		
-		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		dec.setMaximumFractionDigits(2);
+		print("\nYOUR SCORE: " + dec.format(gameScore), textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -669,7 +671,6 @@ public class Game{
 	//return -1 for game over, return 1 for successful completion
 	public static int day3() {
 		Scanner in = new Scanner(System.in);
-		int score = 0;
 		int textSpeed = 25000;
 		print("\n============================\n          Day 3       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: Due to the continuing threat, we have once again increased our security.", textSpeed);
@@ -869,13 +870,13 @@ public class Game{
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your third day. Great job!", textSpeed);
 		in.nextLine();
 		
-		print("\nYOUR SCORE: " + score, textSpeed*3);
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 		
-		if(score > 10){
+		if(gameScore > 10){
 			print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
 			in.nextLine();
-		}else if(score < 0)
+		}else if(gameScore < 0)
 		{
 			print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
 			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
