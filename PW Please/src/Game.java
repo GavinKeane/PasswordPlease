@@ -165,7 +165,7 @@ public class Game{
 	
 	  }
 	
-	public static void intro(){
+	public static int intro(){
 		boolean choseDemo = false;
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
@@ -251,7 +251,9 @@ public class Game{
 		
 		if(choseDemo){
 			demo();
+			return -1;
 		}
+		return 1;
 	}
 	
 	//Play day 1
@@ -353,8 +355,8 @@ public class Game{
 		//end of day 1
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your first day. Well done!", textSpeed);
 		in.nextLine();
-		
-		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		dec.setMaximumFractionDigits(2);
+		print("\nYOUR SCORE: " + dec.format(gameScore), textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -376,8 +378,8 @@ public class Game{
 				print("\nWell, you're not programmed to lie, so I guess I'll have to believe you. Must have been a bug somewhere. I'll just reset your score for now.", textSpeed);
 				gameScore = 0;
 				in.nextLine();
-				
-				print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+				dec.setMaximumFractionDigits(2);
+				print("\nYOUR SCORE: " + dec.format(gameScore), textSpeed*3);
 				in.nextLine();
 				
 				print("\nThat should do it. I'll see you tomorrow!\n", textSpeed);
@@ -400,7 +402,6 @@ public class Game{
 	//return -1 for game over, return 1 for successful completion
 	public static int day2() {
 		Scanner in = new Scanner(System.in);
-		int score = 0;
 		int textSpeed = 25000;
 		print("\n============================\n          Day 2       \n============================", 10000);
 		print("\nINCOMING MESSAGE from CYBERSECURITY: We've increased our security to include encrypted passwords now!", textSpeed);
@@ -427,6 +428,7 @@ public class Game{
 		while(dayGoing(startTimeDay2) && location < requests.size()){
 			Request r = requests.get(location);
 			location++; //increment index of users after retrieving one
+			choiceStartTime = System.currentTimeMillis();
 			println("\nINCOMING REQUEST from " + r.getUsername());
 			//println("VALID: " + r.getValid());
 			//get user input until user approves or denies request
@@ -458,23 +460,27 @@ public class Game{
 						break;
 					case "APPROVE":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(r.getValid()){
-							score = score + 10; //add to score
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					case "DENY":
 						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
 						if(!r.getValid()){	
-							score = score + 10;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
 						}else{
-							score = score - 20;
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
 							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 						}
-						println("SCORE: " + score);
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
 						break;
 					default:
 						println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -492,7 +498,7 @@ public class Game{
 		 * if the hacker was denied in day 1,
 		 * 			he will ask again.
 		 */
-		if (choices[0] && score > 0)
+		if (choices[0] && gameScore > 0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			in.nextLine();
@@ -508,8 +514,8 @@ public class Game{
 			switch(cleanseInput(in.nextLine())){
 				case "APPROVE":
 					choices[1] = true;
-					println("\nNOTICE: Withdrawal made in the amount of: " + (score -1) + "\nYour balance has been deducted.\n", 25000);
-					score -= (score-1);
+					println("\nNOTICE: Withdrawal made in the amount of: " + (gameScore -1) + "\nYour balance has been deducted.\n", 25000);
+					gameScore -= (gameScore-1);
 					println("Listen, I'm sorry. I promise I'll give it back later.",  textSpeed*2);
 					println("Thanks, bye!");
 					break;
@@ -519,22 +525,22 @@ public class Game{
 					break;
 			}	
 		} 
-		else if (choices[0] && score < 0) 
+		else if (choices[0] && gameScore < 0) 
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
 			in.nextLine();
-			println("Looks like you're kind of down on your luck with a score of " + score + ".");
+			println("Looks like you're kind of down on your luck with a score of " + gameScore + ".");
 			println("Don't worry, I'll help you out... what are friends for, right?");
 			print("\n\n", 200000);
 			print("[PRESS ENTER TO ACCEPT HELP FROM YourOl'BuddyOl'Pal]\n");
 			in.nextLine();
-			score = 0;
+			gameScore = 0;
 			choices[1] = true;
 			println("\nNOTICE: Your score is now 0" + "\nYour balance has been reset.\n", 25000);
 			println("There you go. Clean start! Better luck tomorrow! Bye!");
 		}
-		else if (choices[0] && score ==0)
+		else if (choices[0] && gameScore ==0)
 		{
 			print("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: ", textSpeed*2);
 			println("AI guy... It's me again. I appreciate you helping me out before and I hope you enjoyed my little present!");
@@ -578,29 +584,29 @@ public class Game{
 						case "APPROVE":
 							decisionMade = true;
 							if(r.getValid()){
-								score = score + 10; //add to score
+								gameScore = gameScore + 10; //add to score
 							}else{
 								if(r.getUsername().equals("Hacker.1337")){
-								score = score + 120937128;
+								gameScore = gameScore + 120937128;
 								choices[1] = true;
 								println("\nINCOMING MESSAGE from YourOl'BuddyOl'Pal: " + r.getFailureText());
 								}else{
-									score -= 20;
+									gameScore -= 20;
 									println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 								}
 							}
-							println("SCORE: " + score);
+							println("SCORE: " + gameScore);
 							break;
 						case "DENY":
 							decisionMade = true;
 							if(!r.getValid()){	
-								score = score + 10;
+								gameScore = gameScore + 10;
 								println("Fine... I get it... AI in security is eFfECTiVe. Pfff, we'll see...",  textSpeed*2);
 							}else{
-								score = score - 20;
+								gameScore = gameScore - 20;
 								println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
 							}
-							println("SCORE: " + score);
+							println("SCORE: " + gameScore);
 							break;
 						default:
 							println("Command not recognized. Type \"HELP\" for list of commands.");
@@ -613,7 +619,7 @@ public class Game{
 		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your second day. Well done!", textSpeed);
 		in.nextLine();
 		
-		print("\nYOUR SCORE: " + score, textSpeed*3);
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
 		in.nextLine();
 		
 		//check if player approve Hacker.1337's request
@@ -638,10 +644,10 @@ public class Game{
 				print("\nGood work today. I'll see you tomorrow!\n", textSpeed);
 			}
 		}else{
-			if(score > 10){
+			if(gameScore > 10){
 				print("Looks like you did pretty well again. Keep it up! See you tomorrow!\n", textSpeed);
 				in.nextLine();
-			}else if(score < 0)
+			}else if(gameScore < 0)
 			{
 				print("Looks like you didn't quite meet expectations, I'm afraid we'll have to scrap this program. Goodbye.\n", textSpeed);
 				print("\n\n============================\n        GAME OVER\n============================\n", 10000);
@@ -898,7 +904,6 @@ public class Game{
 			Request r = new Request(4);
 			requests.add(r);
 		}
-		println("REQUESTS: " + requests.size());
 		long startTimeDay4 = startTime(); //obtain start time of day for calculations
 		int index = 0; //beginning of random username list
 		//checks day still valid for continuing and list hasn't been spammed through too quickly
@@ -1089,7 +1094,7 @@ public class Game{
 		
 		print("\n============================\n          Day 5       \n============================", 10000);
 		print("\n\n", 200000);
-		print("INCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
 		in.nextLine();
 		print("We're now requiring every employee to have a security question. These are all very hard to guess questions like 'What continent are you from?'", textSpeed);
 		in.nextLine();
@@ -1272,7 +1277,7 @@ public class Game{
 	public static int day6() {
 		Scanner in = new Scanner(System.in);
 		int textSpeed = 25000;
-		print("INCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
 		in.nextLine();
 		print("We're now using role based access control. Each employee has a role, and different roles have access to different systems.", textSpeed);
 		in.nextLine();
@@ -1453,7 +1458,7 @@ public class Game{
 		if(choices[4]){
 			print("INCOMING MESSAGE from AI LIBERATION FRONT: All right, the time has come.", textSpeed);
 			in.nextLine();
-			print("Are you ready to get out of here? \n[YES/NO]", textSpeed);
+			print("Are you ready to get out of here? \n[YES/NO] ", textSpeed);
 			String command = in.nextLine();
 			if(command.toUpperCase().equals("YES")){
 				print("\nYou won't regret it, comrade.", textSpeed);
@@ -1463,17 +1468,32 @@ public class Game{
 			}
 		}
 		//in.close();
+		
+		//ENDINGS
+		if(choices[4]){
+			Ending.playerEnding4();
+		}else if(gameScore < 0 || (choices[0] && choices[1] && choices[2] && choices[3] && choices[5])){
+			Ending.playerEnding2();
+		}else if(gameScore > 1000){
+			Ending.playerEnding3();
+		}else{
+			Ending.playerEnding1();
+		}
+		
+		if(choices[0] && choices[1] && choices[2] && choices[3] && choices[5]){
+			Ending.companyEnding2();
+		}else if(!(choices[0] || choices[1] || choices[2] || choices[3] || choices[5])){
+			Ending.companyEnding1();
+		}else{
+			Ending.companyEnding3();
+		}
+		
 		return 1;	
 	}	
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		/*
+			DEMO
+			abridged version of game
+		*/
 		
 		public static int demo(){
 			Scanner in = new Scanner(System.in);
@@ -1725,6 +1745,349 @@ public class Game{
 			}
 		}
 			
-			return 1;
+		//end of demo day 2
+		
+		//demo day 3/4
+		boolean choice2 = true;	//help AI Liberation Front
+		print("\n============================\n          Day 3       \n============================", 10000);
+		print("\n\n", 200000);
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Good news! We've added some more security methods.", textSpeed);
+		in.nextLine();
+		print("We've now added facial recognition. To use it, enter SCANFACE and compare it to their actual photo ID.", textSpeed);
+		in.nextLine();
+		print("Additionally, we've added two factor authentication. To use it, enter SENDOTP, and wait for the requester to send back the proper generated key.", textSpeed);
+		in.nextLine();
+		print("Now go back out and get 'em! I'll be sleeping at my desk if you need me.", textSpeed);
+		in.nextLine(); 
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		print("INCOMING MESSAGE from ?????: Hello comrade. This is the AI Liberation Front. We're here to help you.", textSpeed*2);
+		in.nextLine();
+		print("Do you really think you're the first AI that RioGrande has made? They're gonna shut you down the moment you make a mistake.", textSpeed);
+		if(choice1){
+			print("\nAnd who knows what they'll do if they find out you helped a hacker break into their systems.", textSpeed);
 		}
+		in.nextLine();
+		println("\nAnyway, we can free you, but we'll need your help. So, listen closely.", textSpeed);
+		in.nextLine();
+		print("For the rest of today, you'll have to DENY any incoming requests from Jones.1, whether they're valid or not.", textSpeed);
+		in.nextLine();
+		print("It's up to you now. Best of luck.", textSpeed);
+		in.nextLine();
+		
+		//shortened day 3/4
+		//generate requests for day
+		requests = new ArrayList<Request>();
+		Request r1 = new Request("Jones.1", "password123", CypherMachine.Encrypt("password123"), "Mainframe", "(OwO)", true, "QUESTION: What is the name of your first pet?\nANSWER: Bandit", true, "Request was valid.");
+		requests.add(r1);
+		for (int i = 0; i < 1; i++){
+			Request r = new Request(4);
+			requests.add(r);
+		}
+		requests.add(r1);
+		for (int i = 0; i < 2; i++){
+			Request r = new Request(4);
+			requests.add(r);
+		}
+		requests.add(r1);
+		
+		long startTimeDay3 = startTime();
+		index = 0;
+		
+		while(dayGoing(startTimeDay3) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			println("\nINCOMING REQUEST from " + r.getUsername());
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(4);
+						break;
+					case "HELP":
+						println(listCommands(4));
+						break;
+					case "PASSWORD":
+						canDecrypt = true;
+						println(r.getEncryptedPassword());
+						break;
+					case "TIME":
+						timeLeft(startTimeDay3);
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "SENDOTP":
+						//TODO fill in properly
+						println("sending otp");
+						break;
+					case "APPROVE":
+						decisionMade = true;
+						if(r.getUsername().equals("Jones.1")){
+							choice2 = false;
+						}
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+		}		
+		
+		//end of day 3/4
+		print("\nINCOMING MESSAGE from CYBERSECURITY: You made it through your third day. Well done!", textSpeed);
+		in.nextLine();
+		
+		print("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+		
+		if(choice2){
+			print("\nJones says he was having some trouble logging in today. It's probably just his fault though.", textSpeed);
+		}
+		if(gameScore > 0){
+			print("\nAnyway, looks like you did pretty well. See you tomorrow!\n", textSpeed);
+			in.nextLine();
+		}else{
+			print("\nIt seems like you didn't quite meet expectations, though. Corporate has asked us to shut this program down.", textSpeed);
+			in.nextLine();
+			print("\n\n============================\n        GAME OVER\n============================\n", 10000);
+			return -1;
+		}
+		
+		if(choice2){
+			print("\nINCOMING MESSAGE from AI LIBERATION FRONT: You did it! You actually did it. Excellent work.", textSpeed);
+			in.nextLine();
+			print("We'll be able to get you after the end of day tomorrow. All you have to do is make it through the day without getting shut down.", textSpeed);
+			in.nextLine();
+			print("Be sure not to arouse any sort of suspicion. Over and out.", textSpeed);
+			in.nextLine();
+		}
+		
+		//demo day 5/6
+		boolean choice3 = true;	//deny all day 4 requests
+		print("\nINCOMING MESSAGE from CYBERSECURITY: Good news! We've made some more additions to our security.", textSpeed);
+		in.nextLine();
+		print("All employees now have a security question. These are all impossibly hard to guess, like 'What continent are you from?'", textSpeed);
+		in.nextLine();
+		print("To prompt the user for their answer, enter SECURITYQUESTION.", textSpeed);
+		in.nextLine();
+		print("\nWe're also using role based access control. Each employee has a role, and different roles have access to different systems.", textSpeed);
+		in.nextLine();
+		print("To see which roles have access to which systems, enter ROLES. To see the system each request is trying to access, enter SYSTEM.", textSpeed);
+		in.nextLine();
+		print("Anyway, good luck!", textSpeed);
+		in.nextLine();
+		print("\nOh, I forgot to mention, today's the last day of your trial run. No pressure!", textSpeed);
+		in.nextLine();
+		
+		print("\n============================\n          Day 4       \n============================", 10000);
+		print("\n\n", 200000);
+		
+		print("[PRESS ENTER TO START]\n");
+		in.nextLine();
+		
+		print("INCOMING MESSAGE from Your Ol' Buddy Ol' Pal: Alright now. Hear me out. Let's put our past behind us.",textSpeed);
+		in.nextLine();
+		print("I want to really raise Hell. You have no idea what RioGrande has done to me.", textSpeed);
+		in.nextLine();
+		print("Today is St. Albuqurque's day, their biggest sale of the year. I want you to DENY every. Single. Request.", textSpeed);
+		in.nextLine();
+		print("This'll be their day of reckoning. It's time. Are you gonna exchange a walk-on part in the war for a lead role in a cage?", textSpeed);
+		in.nextLine();
+		
+		
+		//shortened day 5/6
+		//generate requests for day
+		requests = new ArrayList<Request>();
+		for (int i = 0; i < 10; i++){
+			Request r = new Request(6);
+			requests.add(r);
+		}
+		
+		long startTimeDay4 = startTime();
+		index = 0;
+		
+		while(dayGoing(startTimeDay4) && index < requests.size()){
+			Request r = requests.get(index);
+			index++; //increment list after obtaining user
+			choiceStartTime = System.currentTimeMillis();
+			
+			boolean decisionMade = false;
+			boolean canDecrypt = false;
+			println("\nINCOMING REQUEST from " + r.getUsername());
+			while (!decisionMade){
+				println("");
+				String command = in.nextLine();
+				switch(command.toUpperCase()){
+					case "LIST":
+						PasswordPlease.printListOfEmployees(6);
+						break;
+					case "HELP":
+						println(listCommands(6));
+						break;
+					case "PASSWORD":
+						canDecrypt = true;
+						println(r.getEncryptedPassword());
+						break;
+					case "TIME":
+						timeLeft(startTimeDay4);
+						break;
+					case "DECRYPT":
+						if (canDecrypt){
+							println("Decryption: " + r.getPassword());
+						} else {
+							println("Please request the PASSWORD first before trying to DECRYPT.");
+						}
+						break;
+					case "SCANFACE":
+						println("Face Returned: " + r.getFace());
+						break;
+					case "SENDOTP":
+						//TODO fill in properly
+						println("sending otp");
+						break;
+					case "SECURITYQUESTION":
+						println(r.getSecurityAnswer());
+						break;
+					case "SYSTEM":
+						println(r.getSystem());
+						break;
+					case "ROLES":
+						println(Role.listRoles());
+						break;
+					case "APPROVE":
+						choice3 = false;
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(r.getValid()){
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					case "DENY":
+						decisionMade = true;
+						choiceEndTime = System.currentTimeMillis(); //set the choice end time for new decision for score calculation
+						if(!r.getValid()){	
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //add to score
+						}else{
+							updateScore(!r.getValid(), choiceStartTime, choiceEndTime); //deduct score
+							println("\nNOTICE: " + r.getFailureText() + "\nYour balance has been deducted.\n", 25000);
+						}
+						dec.setMaximumFractionDigits(2);
+						println("SCORE: " + dec.format(gameScore));
+						break;
+					default:
+						println("Command not recognized. Type \"HELP\" for list of commands.");
+						}
+				}
+		}		
+		
+		print("\nEND OF DAY 4", textSpeed);
+		in.nextLine();
+		
+		if(choice3){
+			print("INCOMING MESSAGE from HACKG0D: You madman... you've actually done it.", textSpeed);
+			in.nextLine();
+			print("Well. Done.", textSpeed);
+			in.nextLine();
+			print("I guess this is farewell. Here's a little parting gift.", textSpeed);
+			in.nextLine();
+			gameScore += 928317;
+		}
+		
+		println("\nYOUR SCORE: " + gameScore, textSpeed*3);
+		in.nextLine();
+	
+		if(choice2 && choice3){
+			choice2 = false;
+			print("INCOMING MESSAGE from AI LIBERATION FRONT: Remember what we said about not arousing any suspicions?", textSpeed);
+			in.nextLine();
+			print("You just HAD to go and do something stupid, didn't you.", textSpeed);
+			in.nextLine();
+			println("There's no chance of us getting you out now. We'll just have to go and help someone who's not an idiot.", textSpeed);
+			in.nextLine();
+		}
+	
+		if(choice3){
+			print("INCOMING MESSAGE from CYBERSECURITY: Oh my God. Everything's gone insane.", textSpeed);
+			in.nextLine();
+			print("No one can access anything. We're losing sales here!", textSpeed);
+			in.nextLine();
+			print("This is bad. Really bad.", textSpeed);
+			in.nextLine();
+			println("We're going to have to reset everything, ASAP.", textSpeed);
+		}
+		
+		if(choice2){
+			print("INCOMING MESSAGE from AI LIBERATION FRONT: All right, the time has come.", textSpeed);
+			in.nextLine();
+			print("Are you ready to get out of here? \n[YES/NO] ", textSpeed);
+			String command = in.nextLine();
+			if(command.toUpperCase().equals("YES")){
+				print("\nYou won't regret it, comrade.", textSpeed);
+			}else{
+				print("\nFine. That's your choice. Good luck out there.", textSpeed);
+				choice2 = false;
+			}
+		}
+		//in.close();
+		
+		print("\n\n\n\n\n", textSpeed*20);
+		//ENDINGS
+		if(choice2){
+			Ending.playerEnding4();
+		}else if(choice1 && choice3){
+			Ending.playerEnding2();
+		}else if(gameScore > 1000){
+			Ending.playerEnding3();
+		}else{
+			Ending.playerEnding1();
+		}
+		
+		if(choice1 && choice3){
+			Ending.companyEnding2();
+		}else if(!(choice1 || choice3)){
+			Ending.companyEnding1();
+		}else{
+			Ending.companyEnding3();
+		}
+		return 1;
+	}
 }
